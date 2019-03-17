@@ -13,9 +13,7 @@ class App extends Component {
           <div className="item--title">Car Wash</div>
           <div className="item--edit-button">E</div>
         </div>
-      </div>
 
-      <div className="items-container">
         <div className="item">
           <div className="item--counter">64</div>
           <div className="item--title">Dentist</div>
