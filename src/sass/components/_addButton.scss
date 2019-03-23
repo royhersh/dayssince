@@ -1,0 +1,17 @@
+.add-button {
+  position:fixed;
+  background-color: $color-primary-accent;
+  color: $color-secondary-light;
+  width:7rem;
+  height: 7rem;
+  bottom: 30px;
+  right: 30px;
+  border-radius: 50%;
+  font-size: 7rem;
+  font-weight: bold;
+  // display:flex;
+  text-align:center;
+  line-height: 0.85;
+  box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.5);
+
+}
