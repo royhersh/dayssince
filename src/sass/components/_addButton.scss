@@ -4,6 +4,8 @@
   color: $color-secondary-light;
   width:7rem;
   height: 7rem;
+  // right: 45%;
+  // bottom: 70%;
   bottom: 30px;
   right: 30px;
   border-radius: 50%;
@@ -13,5 +15,10 @@
   text-align:center;
   line-height: 0.85;
   box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.5);
-
+  
+  
+  &:hover {
+    animation: movePlus .7s ease-out;
+  }
 }
+

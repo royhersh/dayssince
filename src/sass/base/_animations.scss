@@ -1,0 +1,22 @@
+@keyframes movePlus {
+  // 0% {transform: translate(0, 0);}
+  // 100% {transform: translate(-40vh, -70vh);}
+  0% {
+    transform: translate(0, 0) scale(1) ;
+  }
+  40% {
+    transform:  translate(-16vh, -28vh) scale(1.4) ;
+  }
+  80% {
+    transform: translate(-40vh, -70vh) scale(1) ; ;
+    opacity:1;
+  }
+  82% {
+    transform: translate(-40vh, -70vh) scale(.8) ; ;
+    opacity:1;
+  }
+  100% {
+    transform: translate(-40vh, -70vh) scale(3) ;
+    opacity: 0;
+  }
+}
