@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import './sass/main.scss';
+import ItemForm from './components/itemForm';
+
+import './sass/main.scss'
 
 class App extends Component {
   render() {
@@ -83,6 +85,7 @@ class App extends Component {
       </div>
 
       <div className="add-button">+</div>
+     <ItemForm/>
      </div>
     );
   }

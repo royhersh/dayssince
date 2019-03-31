@@ -1,0 +1,58 @@
+.item-form {
+  background-color: $color-secondary-light;
+  position: fixed;
+  height: 30%;
+  width: 100%;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  // margin: 0 auto;
+  top:10%;
+  opacity: .95;
+  
+  &__date {
+   
+    &__label {
+      position: absolute;
+      margin-top: -1.5rem;
+    }
+    &__input {
+      position:relative;
+      width:80%;
+      &::-webkit-calendar-picker-indicator {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: auto;
+        height: auto;
+        // color: transparent;
+        // background: transparent;
+        
+      }
+    }
+  }
+
+  &__description {
+    &__label {
+      position:absolute;
+      margin-top: -1.5rem;
+    }
+  }
+
+  &__buttons {
+    display:flex;
+    justify-content: space-evenly;
+    width:80%;
+    
+    &--cancel {
+      width:10rem;
+    }
+    
+    &--save {
+      width:10rem;
+    }
+  }
+}
