@@ -12,15 +12,33 @@
   opacity: .95;
   
   &__date {
-   
+    position: relative;
     &__label {
       position: absolute;
       margin-top: -1.5rem;
     }
+    &__text {
+      width:200px;
+      // height: 50px;
+      background-color: red;
+      font-size: 2rem;
+      text-align: center;
+    }
     &__input {
-      position:relative;
-      width:80%;
-      &::-webkit-calendar-picker-indicator {
+      background-color: transparent;
+      position: absolute;
+      border: none;
+      top:0;
+      left:0;
+      width: 100%;
+      height: 100%;
+
+      color: transparent;
+      appearance: none;
+      border-radius: 0;
+      
+      &::-webkit-calendar-picker-indicator,
+      &::-webkit-datetime-edit {
         position: absolute;
         top: 0;
         left: 0;
@@ -28,10 +46,11 @@
         bottom: 0;
         width: auto;
         height: auto;
-        // color: transparent;
-        // background: transparent;
+        opacity:0;
         
       }
+      
+      
     }
   }
 

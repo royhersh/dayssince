@@ -7,7 +7,12 @@ class ItemForm extends Component {
      <div className="item-form">
       <section className="item-form__date">
         <label className="item-form__date__label" htmlFor="since">Days Since</label>
-        <input className="item-form__date__input" type="date" name="since"/>
+        
+        <div className="item-form__date__text" >
+          <input className="item-form__date__input" type="date" name="since" required="required"/>
+          05 / 03 / 1979
+        </div>
+
       </section>
 
       <section className="item-form__description">
@@ -16,8 +21,8 @@ class ItemForm extends Component {
       </section>
 
       <section className="item-form__buttons">
-      <button className="btn btn--negative item-form__buttons--cancel">Cancel</button>
-      <button className="btn btn--positive item-form__buttons--save">Save</button>
+        <button className="btn btn--negative item-form__buttons--cancel">Cancel</button>
+        <button className="btn btn--positive item-form__buttons--save">Save</button>
       </section>
      </div>
     );
