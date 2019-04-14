@@ -9,10 +9,11 @@
   
 
   &--positive {
-    background: #F58426; /* this is a green */
+    background: #99D498; /* this is a green */
+    color: $color-white;
   }
   &--negative {
-    background: #96F3FA; /* this is a green */
-    color: #193257;
+    background: #FF847C; /* this is a green */
+    color: $color-white;
   }
 }
