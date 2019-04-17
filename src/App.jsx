@@ -1,94 +1,93 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import * as actionCreators from './actions/index';
 import ItemForm from './components/itemForm';
+import DaysSinceItem from './components/daysSinceItem';
+import mockData from './mockData';
 
-import './sass/main.scss'
+import './sass/main.scss';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showForm: false,
+    };
+    // const { fetchData } = this.props;
+    props.fetchData();
+
+    this.toggleForm = this.toggleForm.bind(this);
+  }
+
+  handleCloseItemForm = () => this.setState({ showForm: false });
+
+  handleAddItem = ({ date, title }) => {
+    const { addItem } = this.props;
+    addItem({ date, title });
+    this.closeForm();
+  };
+
+  closeForm() {
+    this.setState({
+      showForm: false,
+    });
+  }
+
+  toggleForm() {
+    const { showForm } = this.state;
+    this.setState({
+      showForm: !showForm,
+    });
+  }
+
+  renderItems() {
+    const { items } = this.props;
+    return items.map(item => <DaysSinceItem key={item.date} title={item.title} date={item.date} />);
+  }
+
   render() {
+    const { showForm } = this.state;
     return (
-     <div className="app-wrapper">
-      <div className="header">Days Since</div>
+      <div className="app-wrapper">
+        <div className="header">Days Since</div>
 
-      <div className="items-container">
-        <div className="item">
-          <div className="item__counter">34</div>
-          <div className="item__title">Car Wash</div>
-          <div className="item__edit-button"><i className="fas fa-edit"></i></div>
-        </div>
+        <div className="items-container">{this.renderItems()}</div>
 
-        <div className="item">
-          <div className="item__counter">64</div>
-          <div className="item__title">Dentist</div>
-          <div className="item__edit-button"><i className="fas fa-edit"></i></div>
+        <div
+          role="button"
+          tabIndex={0}
+          className="add-button"
+          onKeyPress={this.toggleForm}
+          onClick={this.toggleForm}
+        >
+          +
         </div>
-        
-        <div className="item">
-          <div className="item__counter">123</div>
-          <div className="item__title">Something I didn't do for a long time</div>
-          <div className="item__edit-button"><i className="fas fa-edit"></i></div>
-        </div>
-
-        <div className="item">
-          <div className="item__counter">8664</div>
-          <div className="item__title">Something I didn't do for a long time</div>
-          <div className="item__edit-button"><i className="fas fa-edit"></i></div>
-        </div>
-
-        <div className="item">
-          <div className="item__counter">34</div>
-          <div className="item__title">Car Wash</div>
-          <div className="item__edit-button"><i className="fas fa-edit"></i></div>
-        </div>
-
-        <div className="item">
-          <div className="item__counter">64</div>
-          <div className="item__title">Dentist</div>
-          <div className="item__edit-button"><i className="fas fa-edit"></i></div>
-        </div>
-        
-        <div className="item">
-          <div className="item__counter">123</div>
-          <div className="item__title">Something I didn't do for a long time</div>
-          <div className="item__edit-button"><i className="fas fa-edit"></i></div>
-        </div>
-        
-        <div className="item">
-          <div className="item__counter">8664</div>
-          <div className="item__title">Something I didn't do for a long time</div>
-          <div className="item__edit-button"><i className="fas fa-edit"></i></div>
-        </div>
-
-        <div className="item">
-          <div className="item__counter">34</div>
-          <div className="item__title">Car Wash</div>
-          <div className="item__edit-button"><i className="fas fa-edit"></i></div>
-        </div>
-
-        <div className="item">
-          <div className="item__counter">64</div>
-          <div className="item__title">Dentist</div>
-          <div className="item__edit-button"><i className="fas fa-edit"></i></div>
-        </div>
-        
-        <div className="item">
-          <div className="item__counter">123</div>
-          <div className="item__title">Something I didn't do for a long time</div>
-          <div className="item__edit-button"><i className="fas fa-edit"></i></div>
-        </div>
-        
-        <div className="item">
-          <div className="item__counter">8664</div>
-          <div className="item__title">Something I didn't do for a long time</div>
-          <div className="item__edit-button"><i className="fas fa-edit"></i></div>
-        </div>
-
+        {showForm && <ItemForm onClose={this.handleCloseItemForm} onSave={this.handleAddItem} />}
       </div>
-
-      <div className="add-button">+</div>
-     <ItemForm/>
-     </div>
     );
   }
 }
 
-export default App;
+App.propTypes = {
+  fetchData: PropTypes.func.isRequired,
+  addItem: PropTypes.func.isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      title: PropTypes.string,
+      date: PropTypes.number,
+    }),
+  ),
+};
+
+App.defaultProps = {
+  items: [],
+};
+
+const mapStateToProps = state => ({ items: state.items });
+
+export default connect(
+  mapStateToProps,
+  actionCreators,
+)(App);

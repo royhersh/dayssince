@@ -10,6 +10,7 @@
   // margin: 0 auto;
   top:10%;
   opacity: .95;
+  animation: zoomIn .3s ease-out;
   
   &__date {
     position: relative;
