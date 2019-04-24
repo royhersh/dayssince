@@ -12,3 +12,16 @@ export function addItem({ date, title }) {
     payload: { date, title },
   };
 }
+
+export function createNewItem() {
+  return {
+    type: actions.CREATE_NEW_ITEM,
+  };
+}
+
+export function updateItem(payload) {
+  return {
+    type: actions.UPDATE_ITEM,
+    payload,
+  };
+}

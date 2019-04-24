@@ -1,15 +1,17 @@
 // .items-container {
 //   margin-top: 5rem;
 // }
-
 .item {
+  position:relative;
+  background: black;
+}
+.item-info {
   display:flex;
   margin-top: .5rem;
   font-size:2rem;
   margin: 0 1rem 1.5rem 1rem;
   font-family: 'Work Sans', sans-serif;
   
-
   &__counter {
     flex: 0 0 7rem;
     background-color: $color-primary-medium;
@@ -29,17 +31,39 @@
       padding-top: 100%; 	
     }
   }
-
+  
   &__title {
     flex: 1 1 auto;
     align-self:center;
     padding-left: 1rem;
+    background-color: transparent;
+    border: none;
+    outline: none;
     color: $color-primary-dark;
   }
+}
+.item-edit {
+  display: flex;
+  margin: 0 1rem 1.5rem 1rem;
+  color: $color-primary-dark;
+  font-size: 3rem;
+  margin-top: 3rem;
 
-  &__edit-button {
-    flex: 0 0 3rem;
-    align-self:center;
-    color:$color-primary-dark;
+  .icon {
+    margin-right: 1rem;
+
+    &--cancel {
+      flex: 1;
+      color: salmon; 
+    }
   }
+}
+#overlay {
+    background: yellow;
+    opacity: .5;
+    position: fixed;
+    width: 100vh;
+    height: 100vh;
+    top: 0;
+    left: 0;
 }
