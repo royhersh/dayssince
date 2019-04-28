@@ -1,19 +1,42 @@
 // .items-container {
 //   margin-top: 5rem;
 // }
+$margin-top-of-edit-section: 3rem;
+$counter-size: 7rem;
+$edit-section-height: 3rem;
+$item-padding: 1rem;
+$item-with-edit: 2 * $item-padding + $counter-size + $margin-top-of-edit-section + $edit-section-height;
+$item-without-edit: $item-with-edit - $edit-section-height - $margin-top-of-edit-section;
 .item {
   position:relative;
-  background: black;
+  background: rgb(194, 107, 187);
+  padding: $item-padding;
+  height: $item-without-edit;
+  overflow-x: hidden;
+  min-height: 0rem;
+  transition: height .3s ease-out, opacity .3s ease-out;
+  opacity:1;
+
+  &--edit {
+    height: $item-with-edit;
+  }
+
+  &--pre-animate {
+    height: 0rem;
+    opacity:0
+    // padding: 0;
+  }
+  
 }
 .item-info {
   display:flex;
-  margin-top: .5rem;
+  // margin-top: .5rem;
   font-size:2rem;
-  margin: 0 1rem 1.5rem 1rem;
+  // margin: 0 1rem 1.5rem 1rem;
   font-family: 'Work Sans', sans-serif;
   
   &__counter {
-    flex: 0 0 7rem;
+    flex: 0 0 $counter-size;
     background-color: $color-primary-medium;
     color: $color-white;
     border-radius: 50%;
@@ -24,7 +47,7 @@
     justify-content: center;
     align-items: center;
     align-self:center;
-    padding: 1rem;
+    // padding: 1rem;
     &:before {
       content: "";
       display: block;
@@ -44,10 +67,10 @@
 }
 .item-edit {
   display: flex;
-  margin: 0 1rem 1.5rem 1rem;
+  margin: $margin-top-of-edit-section 1rem 1.5rem 1rem;
   color: $color-primary-dark;
-  font-size: 3rem;
-  margin-top: 3rem;
+  font-size: $edit-section-height;
+  
 
   .icon {
     margin-right: 1rem;
@@ -59,7 +82,7 @@
   }
 }
 #overlay {
-    background: yellow;
+    //background: yellow;
     opacity: .5;
     position: fixed;
     width: 100vh;

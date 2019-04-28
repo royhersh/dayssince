@@ -25,3 +25,10 @@ export function updateItem(payload) {
     payload,
   };
 }
+
+export function setEditMode(id) {
+  return {
+    type: actions.SET_EDIT_MODE,
+    payload: { id },
+  };
+}

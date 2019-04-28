@@ -26,13 +26,27 @@ export default (state = [], action) => {
       const { id, title } = action.payload;
 
       return state.map((item) => {
-        if (item.id === id) return item;
+        if (item.id !== id) return item;
 
         return {
           ...item,
           title,
           editMode: false,
         };
+      });
+    }
+
+    case actions.SET_EDIT_MODE: {
+      const { id } = action.payload;
+
+      return state.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            editMode: true
+          };
+        }
+        return item;
       });
     }
 

@@ -57,7 +57,7 @@ class App extends Component {
           role="button"
           tabIndex={0}
           className="add-button"
-          onKeyPress={this.toggleForm}
+          onKeyPress={createNewItem}
           onClick={createNewItem}
         >
           +
