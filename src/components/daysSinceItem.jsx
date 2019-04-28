@@ -41,6 +41,11 @@ class DaysSinceItem extends Component {
     !editMode && setEditMode(id);
   }
 
+  handleDeleteItem = () => {
+    const { id, deleteItem,  } = this.props;
+    deleteItem(id);
+  }
+
   render() {
     const { date, editMode } = this.props;
     const { title, preAnimate } = this.state;
@@ -85,7 +90,7 @@ class DaysSinceItem extends Component {
           <i className="icon icon--cancel fas fa-times" />
           <i className="icon far fa-calendar-alt" />
           <i className="icon far fa-calendar-check" />
-          <i className="icon far fa-trash-alt" />
+          <i onClick={this.handleDeleteItem} className="icon far fa-trash-alt" />
         </div>
       </div>
     );

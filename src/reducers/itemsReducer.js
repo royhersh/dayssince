@@ -50,6 +50,26 @@ export default (state = [], action) => {
       });
     }
 
+    case actions.UNSET_EDIT_MODE: {
+      const { id } = action.payload;
+
+      return state.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            editMode: false
+          };
+        }
+        return item;
+      });
+    }
+
+    case actions.DELETE_ITEM: {
+      const { id } = action.payload;
+
+      return state.filter(item => item.id !== id);
+    }
+
     default:
       return state;
   }

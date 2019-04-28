@@ -32,3 +32,17 @@ export function setEditMode(id) {
     payload: { id },
   };
 }
+
+export function unsetEditMode(id) {
+  return {
+    type: actions.UNSET_EDIT_MODE,
+    payload: { id },
+  };
+}
+
+export function deleteItem(id) {
+  return {
+    type: actions.DELETE_ITEM,
+    payload: { id },
+  };
+}
