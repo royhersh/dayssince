@@ -7,7 +7,7 @@ $edit-section-height: 2.5rem;
 $item-padding: 1rem;
 $item-without-edit: $counter-size + 2 * $item-padding;
 $item-with-edit: $item-without-edit + $edit-section-height + $margin-top-of-edit-section;
-
+$transition-delay: .2s;
 .item {
   position:relative;
   display:flex;
@@ -17,10 +17,11 @@ $item-with-edit: $item-without-edit + $edit-section-height + $margin-top-of-edit
   height: $item-without-edit;
   overflow: hidden;
   transition:  
-    height .2s ease-out, 
-    opacity .2s ease-out, 
-    transform .2s ease-out,
-    background-color .2s ease-out .2s;
+    height $transition-delay ease-out, 
+    opacity $transition-delay ease-out,
+    padding $transition-delay ease-out,
+    transform $transition-delay ease-out,
+    background-color $transition-delay ease-out $transition-delay;
   // transition: background-color 1s ease-out 3s;
   opacity:1;
   
@@ -30,10 +31,11 @@ $item-with-edit: $item-without-edit + $edit-section-height + $margin-top-of-edit
     transform-origin: top;
     height: $item-with-edit;
     transition: 
-      background-color .2s ease-out,
-      height .2s ease-out .2s, 
-      opacity .2s ease-out .2s, 
-      transform .2s ease-out .2s;
+      background-color $transition-delay ease-out,
+      height $transition-delay ease-out $transition-delay, 
+      padding $transition-delay ease-out $transition-delay, 
+      opacity $transition-delay ease-out $transition-delay, 
+      transform $transition-delay ease-out $transition-delay;
 
     // transition:  background-color 1s ease-out , height 3s ease-out 1s, opacity 3s ease-out 1s, transform 3s ease-out 1s;
     
