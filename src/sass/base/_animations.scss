@@ -32,3 +32,13 @@
     transform: scale(1);
   }
 }
+@keyframes itemEditMode {
+  0% {
+    background: none;
+  }
+
+  100% {
+    background: $color-secondary-light;
+    // transform: scale(1.1);
+  }
+}

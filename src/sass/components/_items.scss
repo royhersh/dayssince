@@ -12,23 +12,37 @@ $item-with-edit: $item-without-edit + $edit-section-height + $margin-top-of-edit
   position:relative;
   display:flex;
   flex-direction: column;
-
-  background: rgb(194, 107, 187);
+  background: none;
   padding: $item-padding;
   height: $item-without-edit;
   overflow: hidden;
-  min-height: 0rem;
-  transition: height .3s ease-out, opacity .3s ease-out;
+  transition:  
+    height .2s ease-out, 
+    opacity .2s ease-out, 
+    transform .2s ease-out,
+    background-color .2s ease-out .2s;
+  // transition: background-color 1s ease-out 3s;
   opacity:1;
-
+  
   &--edit {
+    background: $color-secondary-light;
+    transform: scale(1.05);
+    transform-origin: top;
     height: $item-with-edit;
+    transition: 
+      background-color .2s ease-out,
+      height .2s ease-out .2s, 
+      opacity .2s ease-out .2s, 
+      transform .2s ease-out .2s;
+
+    // transition:  background-color 1s ease-out , height 3s ease-out 1s, opacity 3s ease-out 1s, transform 3s ease-out 1s;
+    
   }
 
   &--pre-animate {
-    height: 0rem;
-    opacity:0
-    // padding: 0;
+    height: 0;
+    opacity:0;
+    padding: 0;
   }
   
 }
@@ -89,7 +103,7 @@ $item-with-edit: $item-without-edit + $edit-section-height + $margin-top-of-edit
     //background: yellow;
     opacity: .5;
     position: fixed;
-    width: 100vh;
+    width: 100vw;
     height: 100vh;
     top: 0;
     left: 0;
