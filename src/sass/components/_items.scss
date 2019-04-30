@@ -1,18 +1,22 @@
 // .items-container {
 //   margin-top: 5rem;
 // }
-$margin-top-of-edit-section: 3rem;
+$margin-top-of-edit-section: 2.5rem;
 $counter-size: 7rem;
-$edit-section-height: 3rem;
+$edit-section-height: 2.5rem;
 $item-padding: 1rem;
-$item-with-edit: 2 * $item-padding + $counter-size + $margin-top-of-edit-section + $edit-section-height;
-$item-without-edit: $item-with-edit - $edit-section-height - $margin-top-of-edit-section;
+$item-without-edit: $counter-size + 2 * $item-padding;
+$item-with-edit: $item-without-edit + $edit-section-height + $margin-top-of-edit-section;
+
 .item {
   position:relative;
+  display:flex;
+  flex-direction: column;
+
   background: rgb(194, 107, 187);
   padding: $item-padding;
   height: $item-without-edit;
-  overflow-x: hidden;
+  overflow: hidden;
   min-height: 0rem;
   transition: height .3s ease-out, opacity .3s ease-out;
   opacity:1;
@@ -67,7 +71,7 @@ $item-without-edit: $item-with-edit - $edit-section-height - $margin-top-of-edit
 }
 .item-edit {
   display: flex;
-  margin: $margin-top-of-edit-section 1rem 1.5rem 1rem;
+  padding: $margin-top-of-edit-section 1rem 0 1rem;
   color: $color-primary-dark;
   font-size: $edit-section-height;
   
