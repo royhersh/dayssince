@@ -17,8 +17,11 @@ class DaysSinceItem extends Component {
 
     this.state = {
       title: props.title || '',
+      date: props.date || Date.now(),
       preAnimate: true,
     };
+
+    // this.handleDateChange = this.handleDateChange.bind(this);
   }
 
   componentDidMount() {
@@ -27,7 +30,10 @@ class DaysSinceItem extends Component {
       this.setState({ preAnimate: false });
     }, 0);
   }
-
+  handleDateChange = (e) => {
+    this.setState({date: new Date(e.target.value).getTime()});
+  }
+  
   handleChangeTitle = e => this.setState({ title: e.target.value });
 
   handleClickOverlay = () => {
@@ -51,8 +57,8 @@ class DaysSinceItem extends Component {
   }
 
   render() {
-    const { date, editMode } = this.props;
-    const { title, preAnimate } = this.state;
+    const { editMode } = this.props;
+    const { title, date, preAnimate } = this.state;
     const daysSince = DaysSinceItem.daysSinceDate(date);
 
     const itemStyle = {
@@ -66,7 +72,16 @@ class DaysSinceItem extends Component {
     return (
       <div className={classNames('item', itemClass)} style={itemStyle} onClick={this.setEditMode}>
         <div className="item-info">
-          <div className="item-info__counter">{daysSince}</div>
+          <div className="item-info__counter">{daysSince}
+          <input
+              id="item-form__date__input"
+              className="item-form__date__input"
+              type="date"
+              name="since"
+              required="required"
+              onChange={this.handleDateChange}
+            />
+          </div>
           {editMode ? (
             <>
               <input
