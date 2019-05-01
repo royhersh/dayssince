@@ -7,7 +7,8 @@ $edit-section-height: 2.5rem;
 $item-padding: 1rem;
 $item-without-edit: $counter-size + 2 * $item-padding;
 $item-with-edit: $item-without-edit + $edit-section-height + $margin-top-of-edit-section;
-$transition-delay: .2s;
+$transition-delay: .3s;
+
 .item {
   position:relative;
   display:flex;
@@ -16,10 +17,13 @@ $transition-delay: .2s;
   padding: $item-padding;
   height: $item-without-edit;
   overflow: hidden;
+  margin: .5rem;
+  border-radius: .5rem;
   transition:  
     height $transition-delay ease-out, 
     opacity $transition-delay ease-out,
     padding $transition-delay ease-out,
+    margin $transition-delay ease-out,
     transform $transition-delay ease-out,
     background-color $transition-delay ease-out $transition-delay;
   // transition: background-color 1s ease-out 3s;
@@ -34,10 +38,11 @@ $transition-delay: .2s;
       background-color $transition-delay ease-out,
       height $transition-delay ease-out $transition-delay, 
       padding $transition-delay ease-out $transition-delay, 
+      margin $transition-delay ease-out $transition-delay, 
       opacity $transition-delay ease-out $transition-delay, 
       transform $transition-delay ease-out $transition-delay;
 
-    // transition:  background-color 1s ease-out , height 3s ease-out 1s, opacity 3s ease-out 1s, transform 3s ease-out 1s;
+    
     
   }
 
@@ -45,6 +50,7 @@ $transition-delay: .2s;
     height: 0;
     opacity:0;
     padding: 0;
+    margin: 0;
   }
   
 }
@@ -91,7 +97,14 @@ $transition-delay: .2s;
   padding: $margin-top-of-edit-section 1rem 0 1rem;
   color: $color-primary-dark;
   font-size: $edit-section-height;
-  
+  opacity: 0;
+  transition: opacity $transition-delay/2 ease-out;
+
+  .item--edit & {
+    opacity: 1;
+    transition: opacity $transition-delay*2 ease-out $transition-delay;
+    // transition: none;
+  }
 
   .icon {
     margin-right: 1rem;
