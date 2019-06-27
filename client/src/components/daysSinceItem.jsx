@@ -25,7 +25,7 @@ class DaysSinceItem extends Component {
   }
 
   componentDidMount() {
-    this.titleRef.current.focus();
+    this.titleRef.current && this.titleRef.current.focus();
     window.requestAnimationFrame(() => this.setState({ preAnimate: false }));
   }
 

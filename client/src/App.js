@@ -8,36 +8,10 @@ import DaysSinceItem from './components/daysSinceItem';
 import './sass/main.scss';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    // this.state = {
-    //   showForm: false,
-    // };
-    props.fetchData();
-
-    // this.toggleForm = this.toggleForm.bind(this);
+  componentDidMount() {
+    const { fetchData } = this.props;
+    fetchData();
   }
-
-  // handleCloseItemForm = () => this.setState({ showForm: false });
-
-  // handleAddItem = ({ date, title }) => {
-  //   const { addItem } = this.props;
-  //   addItem({ date, title });
-  //   this.closeForm();
-  // };
-
-  // closeForm() {
-  //   this.setState({
-  //     showForm: false,
-  //   });
-  // }
-
-  // toggleForm() {
-  //   const { showForm } = this.state;
-  //   this.setState({
-  //     showForm: !showForm,
-  //   });
-  // }
 
   renderItems() {
     const { items } = this.props;

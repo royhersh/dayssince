@@ -2,8 +2,12 @@ import * as actions from '../actions/types';
 
 export default (state = [], action) => {
   switch (action.type) {
+    case actions.FETCH_DATA: {
+      const localState = JSON.parse(localStorage.getItem('items'));
+      return localState || state;
+    }
+
     case actions.ADD_ITEM:
-      console.log(action);
       return [
         ...state,
         {
