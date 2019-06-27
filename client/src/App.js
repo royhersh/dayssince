@@ -44,6 +44,7 @@ class App extends Component {
     return items.map(item => <DaysSinceItem key={item.id} {...item} />);
   }
 
+
   render() {
     // const { showForm } = this.state;
     const { createNewItem } = this.props;

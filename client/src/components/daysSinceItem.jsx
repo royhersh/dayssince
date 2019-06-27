@@ -26,54 +26,61 @@ class DaysSinceItem extends Component {
 
   componentDidMount() {
     this.titleRef.current.focus();
-    setTimeout(() => {
-      this.setState({ preAnimate: false });
-    }, 0);
+    window.requestAnimationFrame(() => this.setState({ preAnimate: false }));
   }
+
   handleDateChange = (e) => {
-    this.setState({date: new Date(e.target.value).getTime()});
-  }
-  
+    this.setState({ date: new Date(e.target.value).getTime() });
+  };
+
   handleChangeTitle = e => this.setState({ title: e.target.value });
 
   handleClickOverlay = () => {
     const { id, updateItem } = this.props;
     const { title } = this.state;
-    updateItem({id, title});
+    updateItem({ id, title });
   };
 
   setEditMode = () => {
     const { id, setEditMode, editMode } = this.props;
     !editMode && setEditMode(id);
-  }
+  };
+
   handleCancel = () => {
     const { id, unsetEditMode } = this.props;
     unsetEditMode(id);
-  }
-  
+  };
+
   handleDeleteItem = () => {
-    const { id, deleteItem,  } = this.props;
+    const { id, deleteItem } = this.props;
     deleteItem(id);
-  }
+  };
 
   render() {
-    const { editMode } = this.props;
+    const { editMode, deleteAnimation } = this.props;
     const { title, date, preAnimate } = this.state;
     const daysSince = DaysSinceItem.daysSinceDate(date);
 
     const itemStyle = {
       zIndex: Number(editMode),
     };
-    const itemClass = classNames({
+    const itemClass = classNames('item', {
       'item--edit': editMode,
       'item--pre-animate': preAnimate,
+      'item--delete': deleteAnimation,
     });
 
     return (
-      <div className={classNames('item', itemClass)} style={itemStyle} onClick={this.setEditMode}>
+      <div
+        className={classNames(itemClass)}
+        style={itemStyle}
+        onClick={this.setEditMode}
+        role="button"
+      >
         <div className="item-info">
-          <div className="item-info__counter">{daysSince}
-          <input
+          <div className="item-info__counter">
+            {daysSince}
+            <input
               id="item-form__date__input"
               className="item-form__date__input"
               type="date"

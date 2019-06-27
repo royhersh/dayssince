@@ -43,7 +43,7 @@ export default (state = [], action) => {
         if (item.id === id) {
           return {
             ...item,
-            editMode: true
+            editMode: true,
           };
         }
         return item;
@@ -57,7 +57,21 @@ export default (state = [], action) => {
         if (item.id === id) {
           return {
             ...item,
-            editMode: false
+            editMode: false,
+          };
+        }
+        return item;
+      });
+    }
+
+    case actions.DELETE_ANIMATE: {
+      const { id } = action.payload;
+
+      return state.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            deleteAnimation: true,
           };
         }
         return item;

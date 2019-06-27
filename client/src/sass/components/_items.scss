@@ -6,86 +6,87 @@ $counter-size: 7rem;
 $edit-section-height: 2.5rem;
 $item-padding: 1rem;
 $item-without-edit: $counter-size + 2 * $item-padding;
-$item-with-edit: $item-without-edit + $edit-section-height + $margin-top-of-edit-section;
-$transition-delay: .2s;
+$item-with-edit: $item-without-edit + $edit-section-height +
+  $margin-top-of-edit-section;
+$transition-delay: 0.2s;
 
 .item {
-  position:relative;
-  display:flex;
+  position: relative;
+  display: flex;
   flex-direction: column;
   background: none;
   padding: $item-padding;
   height: $item-without-edit;
   overflow: hidden;
-  margin: .5rem;
-  border-radius: .5rem;
-  transition:  
-    height $transition-delay ease-out, 
-    opacity $transition-delay ease-out,
-    padding $transition-delay ease-out,
-    margin $transition-delay ease-out,
-    transform $transition-delay ease-out,
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+  transition: height $transition-delay ease-out,
+    opacity $transition-delay ease-out, padding $transition-delay ease-out,
+    margin $transition-delay ease-out, transform $transition-delay ease-out,
     background-color $transition-delay ease-out $transition-delay;
   // transition: background-color 1s ease-out 3s;
-  opacity:1;
-  
+  opacity: 1;
+
   &--edit {
     background: $color-secondary-light;
     transform: scale(1.03);
     transform-origin: top;
     height: $item-with-edit;
-    transition: 
-      background-color $transition-delay ease-out,
-      height $transition-delay ease-out $transition-delay, 
-      padding $transition-delay ease-out $transition-delay, 
-      margin $transition-delay ease-out $transition-delay, 
-      opacity $transition-delay ease-out $transition-delay, 
+    transition: background-color $transition-delay ease-out,
+      height $transition-delay ease-out $transition-delay,
+      padding $transition-delay ease-out $transition-delay,
+      margin $transition-delay ease-out $transition-delay,
+      opacity $transition-delay ease-out $transition-delay,
       transform $transition-delay ease-out $transition-delay;
-
-    
-    
   }
 
   &--pre-animate {
     height: 0;
-    opacity:0;
+    opacity: 0;
     padding: 0;
     margin: 0;
   }
-  
+
+  &--delete {
+    transform: scale(0);
+    height: 0;
+    opacity: 0;
+    padding: 0;
+    margin: 0 0 -0.5rem 0;
+  }
 }
 .item-info {
-  display:flex;
+  display: flex;
   flex: 0 0 auto;
   // margin-top: .5rem;
-  font-size:2rem;
+  font-size: 2rem;
   // margin: 0 1rem 1.5rem 1rem;
   font-family: 'Work Sans', sans-serif;
-  
+
   &__counter {
     display: flex;
-    position:relative;
+    position: relative;
     flex: 0 0 $counter-size;
     background-color: $color-primary-medium;
     color: $color-white;
     border-radius: 50%;
-    box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.5);
-    text-shadow: 1px 1px 2px  rgba(0,0,0,0.5);
-    font-weight:bold;
+    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
     justify-content: center;
     align-items: center;
-    align-self:center;
+    align-self: center;
     // padding: 1rem;
     &:before {
-      content: "";
+      content: '';
       display: block;
-      padding-top: 100%; 	
+      padding-top: 100%;
     }
   }
-  
+
   &__title {
     flex: 1 1 auto;
-    align-self:center;
+    align-self: center;
     padding-left: 1rem;
     background-color: transparent;
     border: none;
@@ -104,7 +105,7 @@ $transition-delay: .2s;
 
   .item--edit & {
     opacity: 1;
-    transition: opacity $transition-delay*2 ease-out $transition-delay;
+    transition: opacity $transition-delay * 2 ease-out $transition-delay;
     // transition: none;
   }
 
@@ -113,16 +114,16 @@ $transition-delay: .2s;
 
     &--cancel {
       flex: 1;
-      color: salmon; 
+      color: salmon;
     }
   }
 }
 #overlay {
-    //background: yellow;
-    opacity: .5;
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
+  //background: yellow;
+  opacity: 0.5;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
 }

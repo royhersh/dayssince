@@ -1,48 +1,44 @@
+/* Actions */
 import * as actions from './types';
 
-export function fetchData() {
-  return {
-    type: actions.FETCH_DATA,
-  };
-}
+export const fetchData = () => ({
+  type: actions.FETCH_DATA,
+});
 
-export function addItem({ date, title }) {
-  return {
-    type: actions.ADD_ITEM,
-    payload: { date, title },
-  };
-}
+export const addItem = ({ date, title }) => ({
+  type: actions.ADD_ITEM,
+  payload: { date, title },
+});
 
-export function createNewItem() {
-  return {
-    type: actions.CREATE_NEW_ITEM,
-  };
-}
+export const createNewItem = () => ({
+  type: actions.CREATE_NEW_ITEM,
+});
 
-export function updateItem(payload) {
-  return {
-    type: actions.UPDATE_ITEM,
-    payload,
-  };
-}
+export const updateItem = payload => ({
+  type: actions.UPDATE_ITEM,
+  payload,
+});
 
-export function setEditMode(id) {
-  return {
-    type: actions.SET_EDIT_MODE,
+export const setEditMode = id => ({
+  type: actions.SET_EDIT_MODE,
+  payload: { id },
+});
+
+export const unsetEditMode = id => ({
+  type: actions.UNSET_EDIT_MODE,
+  payload: { id },
+});
+
+export const deleteItem = id => (dispatch) => {
+  dispatch({
+    type: actions.DELETE_ANIMATE,
     payload: { id },
-  };
-}
-
-export function unsetEditMode(id) {
-  return {
-    type: actions.UNSET_EDIT_MODE,
-    payload: { id },
-  };
-}
-
-export function deleteItem(id) {
-  return {
-    type: actions.DELETE_ITEM,
-    payload: { id },
-  };
-}
+  });
+  setTimeout(
+    () => dispatch({
+      type: actions.DELETE_ITEM,
+      payload: { id },
+    }),
+    500,
+  );
+};
