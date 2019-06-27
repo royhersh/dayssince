@@ -37,8 +37,3 @@ passport.use(
   )
 );
 
-// prod: royhersh/ gspNMZh4rq2deHy3
-// mongodb+srv://royhersh:gspNMZh4rq2deHy3@cluster0-pobqc.mongodb.net/test?retryWrites=true&w=majority
-// mongodb+srv://royhersh:<password>@cluster0-pobqc.mongodb.net/test?retryWrites=true&w=majority
-//clientid: 954550048330-k1sa3gbmi9ddp6sthgn9cg8kc5229ceb.apps.googleusercontent.com
-// clientSecret: SqkvPWLr9mg0JIC25qqBpshe;
