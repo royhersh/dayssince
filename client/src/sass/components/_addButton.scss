@@ -1,8 +1,8 @@
 .add-button {
-  position:fixed;
+  position: fixed;
   background-color: $color-primary-accent;
   color: $color-secondary-light;
-  width:7rem;
+  width: 7rem;
   height: 7rem;
   z-index: 1;
   // right: 45%;
@@ -13,13 +13,15 @@
   font-size: 7rem;
   font-weight: bold;
   // display:flex;
-  text-align:center;
+  text-align: center;
   line-height: 0.85;
-  box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.5);
-  
-  
+  box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
+
   &:hover {
     //animation: movePlus .7s ease-out;
   }
-}
 
+  @include respond(desktop) {
+    position: absolute;
+  }
+}

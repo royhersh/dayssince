@@ -4,7 +4,13 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  // position: relative;
+  position: relative;
+
+  @include respond(desktop) {
+    width: 600px;
+    margin: 0 auto;
+    border: 1px solid #444;
+  }
 }
 
 .header {
@@ -37,5 +43,10 @@
   &__login-icon {
     font-size: 2rem;
     margin-left: 1rem;
+  }
+
+  @include respond(desktop) {
+    width: 600px;
+    margin: 0 auto;
   }
 }
