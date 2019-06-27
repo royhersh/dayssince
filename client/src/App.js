@@ -44,7 +44,6 @@ class App extends Component {
     return items.map(item => <DaysSinceItem key={item.id} {...item} />);
   }
 
-
   render() {
     // const { showForm } = this.state;
     const { createNewItem } = this.props;
@@ -63,9 +62,11 @@ class App extends Component {
         >
           +
         </div>
+        <div className="footer">
+          <i className="footer__login-icon fas fa-user-slash" />
+        </div>
         {/* showForm &&
-        <ItemForm onClose={this.handleCloseItemForm} onSave={this.handleAddItem} /> */
-        }
+        <ItemForm onClose={this.handleCloseItemForm} onSave={this.handleAddItem} /> */}
       </div>
     );
   }
