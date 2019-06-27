@@ -27,14 +27,14 @@ export default (state = [], action) => {
       ];
 
     case actions.UPDATE_ITEM: {
-      const { id, title } = action.payload;
+      const { id, ...rest } = action.payload;
 
       return state.map((item) => {
         if (item.id !== id) return item;
 
         return {
           ...item,
-          title,
+          ...rest,
           editMode: false,
         };
       });

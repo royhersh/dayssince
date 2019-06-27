@@ -29,16 +29,21 @@ class DaysSinceItem extends Component {
     window.requestAnimationFrame(() => this.setState({ preAnimate: false }));
   }
 
-  handleDateChange = (e) => {
-    this.setState({ date: new Date(e.target.value).getTime() });
-  };
+  // static getDerivedStateFromProps(props, state) {
+  //   if (props.date !== state.date) {
+  //     return { date: props.date };
+  //   }
+  //   return null;
+  // }
 
-  handleChangeTitle = e => this.setState({ title: e.target.value });
+  handleDateChange = e => this.setState({ date: new Date(e.target.value).getTime() });
+
+  handleTitleChange = e => this.setState({ title: e.target.value });
 
   handleClickOverlay = () => {
     const { id, updateItem } = this.props;
-    const { title } = this.state;
-    updateItem({ id, title });
+    const { title, date } = this.state;
+    updateItem({ id, title, date });
   };
 
   setEditMode = () => {
@@ -96,7 +101,7 @@ class DaysSinceItem extends Component {
                 className="item-info__title"
                 ref={this.titleRef}
                 value={title}
-                onChange={this.handleChangeTitle}
+                onChange={this.handleTitleChange}
               />
               <Modal>
                 <div
