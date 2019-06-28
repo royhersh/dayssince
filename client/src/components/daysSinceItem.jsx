@@ -53,7 +53,11 @@ class DaysSinceItem extends Component {
   };
 
   handleCancel = () => {
-    const { id, unsetEditMode } = this.props;
+    const {
+      id, unsetEditMode, title, date,
+    } = this.props;
+
+    this.setState({ date, title });
     unsetEditMode(id);
   };
 
