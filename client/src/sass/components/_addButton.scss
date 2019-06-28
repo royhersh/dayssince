@@ -16,6 +16,11 @@
   text-align: center;
   line-height: 0.85;
   box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.5);
+  transition: bottom $transition-delay ease-out;
+
+  &--hidden {
+    bottom: -10rem;
+  }
 
   &:hover {
     //animation: movePlus .7s ease-out;

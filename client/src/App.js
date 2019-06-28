@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 import * as actionCreators from './actions/index';
 // import ItemForm from './components/itemForm';
 import DaysSinceItem from './components/daysSinceItem';
@@ -20,7 +21,11 @@ class App extends Component {
 
   render() {
     // const { showForm } = this.state;
-    const { createNewItem } = this.props;
+    const { createNewItem, showPlusButton } = this.props;
+    const addButtonClass = classNames({
+      'add-button': true,
+      'add-button--hidden': !showPlusButton,
+    });
     return (
       <div className="app-wrapper">
         <div className="header">Days Since</div>
@@ -28,14 +33,15 @@ class App extends Component {
         <div id="modal" />
 
         <div
+          className={addButtonClass}
           role="button"
           tabIndex={0}
-          className="add-button"
           onKeyPress={createNewItem}
           onClick={createNewItem}
         >
           +
         </div>
+
         <div className="footer">
           <i className="footer__login-icon fas fa-user-slash" />
         </div>
@@ -63,7 +69,10 @@ App.defaultProps = {
   items: [],
 };
 
-const mapStateToProps = state => ({ items: state.items });
+const mapStateToProps = state => ({
+  items: state.items,
+  showPlusButton: state.ui.showPlusButton,
+});
 
 export default connect(
   mapStateToProps,

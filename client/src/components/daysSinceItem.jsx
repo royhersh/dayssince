@@ -41,8 +41,9 @@ class DaysSinceItem extends Component {
   handleTitleChange = e => this.setState({ title: e.target.value });
 
   handleClickOverlay = () => {
-    const { id, updateItem } = this.props;
+    const { id, updateItem, unsetEditMode } = this.props;
     const { title, date } = this.state;
+    unsetEditMode(id);
     updateItem({ id, title, date });
   };
 
