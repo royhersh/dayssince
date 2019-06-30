@@ -20,20 +20,12 @@ module.exports = app => {
   app.get(
     '/auth/google/callback',
     passport.authenticate('google'),
-    (req, res, next) => {
+    (req, res) => {
       console.log('Google Authenticated');
       console.log(req.user);
       res.send({ token: tokenForUser(req.user) });
-    },
-    (_req, res) => {
-      res.redirect('/survey');
     }
   );
-
-  app.get('/api/logout', (req, res) => {
-    req.logout();
-    res.redirect('/');
-  });
 
   app.get('/api/current_user', (req, res, next) => {
     res.send(req.user);
