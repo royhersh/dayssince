@@ -23,7 +23,8 @@ module.exports = app => {
     (req, res) => {
       console.log('Google Authenticated');
       console.log(req.user);
-      res.send({ token: tokenForUser(req.user) });
+      // res.send({ token: tokenForUser(req.user) });
+      res.redirect(`/?token=${tokenForUser(req.user)}`);
     }
   );
 

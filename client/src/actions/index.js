@@ -1,10 +1,13 @@
 /* Actions */
 import * as actions from './types';
 
-export const fetchData = () => ({
-  type: actions.FETCH_DATA,
-});
-
+export const fetchData = () => {
+  const localState = JSON.parse(localStorage.getItem('items'));
+  return {
+    type: actions.FETCH_DATA,
+    payload: localState || [],
+  };
+};
 export const addItem = ({ date, title }) => ({
   type: actions.ADD_ITEM,
   payload: { date, title },

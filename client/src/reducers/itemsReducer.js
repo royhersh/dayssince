@@ -3,8 +3,7 @@ import * as actions from '../actions/types';
 export default (state = [], action) => {
   switch (action.type) {
     case actions.FETCH_DATA: {
-      const localState = JSON.parse(localStorage.getItem('items'));
-      return localState || state;
+      return action.payload;
     }
 
     case actions.ADD_ITEM:

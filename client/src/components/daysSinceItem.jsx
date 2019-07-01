@@ -27,6 +27,10 @@ class DaysSinceItem extends Component {
   componentDidMount() {
     this.titleRef.current && this.titleRef.current.focus();
     window.requestAnimationFrame(() => this.setState({ preAnimate: false }));
+
+    // TODO: re-render item tomorrow at 7:00am
+    //       hold daysSince in state instead of calculating it on render.
+    //       then set a a setTimeout to 7:00 to re calaulate the state and force a re render
   }
 
   // static getDerivedStateFromProps(props, state) {
