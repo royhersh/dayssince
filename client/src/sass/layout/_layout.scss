@@ -43,6 +43,12 @@
   &__login-icon {
     font-size: 2rem;
     margin-left: 1rem;
+    color: #888;
+    text-decoration: none;
+
+    &--loggedin {
+      color: $color-green;
+    }
   }
 
   @include respond(desktop) {

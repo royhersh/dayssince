@@ -11,14 +11,24 @@ import DaysSinceItem from './components/daysSinceItem';
 import './sass/main.scss';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userToken: false,
+    };
+  }
+
   componentDidMount() {
     const { fetchData, location } = this.props;
-    const { token } = queryString.parse(location.search);
+    const { token: tokenFromUrl } = queryString.parse(location.search);
 
     fetchData();
-    if (token) {
-      localStorage.setItem('token', token);
+    if (tokenFromUrl) {
+      localStorage.setItem('token', tokenFromUrl);
     }
+
+    const userToken = localStorage.getItem('token');
+    this.setState({ userToken });
   }
 
   renderItems() {
@@ -29,10 +39,19 @@ class App extends Component {
   render() {
     // const { showForm } = this.state;
     const { createNewItem, showPlusButton } = this.props;
+    const { userToken } = this.state;
     const addButtonClass = classNames({
       'add-button': true,
       'add-button--hidden': !showPlusButton,
     });
+    const footerClass = classNames('footer__login-icon', {
+      'footer__login-icon--loggedin': userToken,
+    });
+    const footerIconClass = classNames({
+      'fas fa-user-slash': !userToken,
+      'fas fa-user': userToken,
+    });
+
     return (
       <div className="app-wrapper">
         <div className="header">Days Since</div>
@@ -49,9 +68,9 @@ class App extends Component {
           +
         </div>
 
-        <div className="footer">
-          <a href="/auth/google">
-            <i className="footer__login-icon fas fa-user-slash" />
+        <div className="footer ">
+          <a href="/auth/google" className={footerClass}>
+            <i className={footerIconClass} />
           </a>
         </div>
         {/* showForm &&
