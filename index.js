@@ -4,7 +4,11 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const keys = require('./config/keys');
 require('./models/users.js');
+require('./models/items.js');
 require('./services/passport');
+
+const authRoutes = require('./routes/authRoutes');
+const daysSinceRoutes = require('./routes/daysSinceRoutes');
 
 mongoose.set('useNewUrlParser', true);
 mongoose.connect(keys.mongoURI);
@@ -19,7 +23,8 @@ const app = express();
 app.use(passport.initialize());
 // app.use(passport.session());
 
-require('./routes/authRoutes')(app);
+authRoutes(app);
+app.use('/dayssince/api', daysSinceRoutes);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));

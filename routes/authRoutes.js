@@ -28,11 +28,11 @@ module.exports = app => {
     }
   );
 
-  app.get('/api/current_user', (req, res, next) => {
+  app.get('/api/current_user', (req, res) => {
     res.send(req.user);
   });
 
-  app.get('/api/jwt', requireAuth, (req, res, next) => {
+  app.get('/api/jwt', requireAuth, (req, res) => {
     res.send(req.user);
   });
 };
