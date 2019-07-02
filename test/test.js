@@ -10,7 +10,7 @@ const Item = require('../models/items');
 
 const MONGO_URL = 'mongodb://localhost/users_test';
 
-let userId, token;
+let john, userId, token;
 
 before(done => {
   // Connect to database
@@ -24,7 +24,7 @@ before(done => {
 
 beforeEach(done => {
   // Create user for testing
-  const john = new User({
+  john = new User({
     googleId: 'someGoogleIdToken',
     items: [
       {
@@ -70,6 +70,7 @@ describe('Testing dayssince API', () => {
       })
       .expect(200)
       .end((err, { body }) => {
+        if (err) return done(err);
         expect(body).to.have.property('_id');
         expect(new Date(body.date).getTime()).to.equal(now);
         expect(body.title).to.equal('new title');
@@ -90,11 +91,44 @@ describe('Testing dayssince API', () => {
       .expect('Content-Type', /json/)
       .expect(200)
       .end((err, { body }) => {
+        if (err) return done(err);
         expect(body).to.be.an('array');
         expect(body.length).to.equal(1);
         expect(body[0].title).to.equal('sample Title');
 
         done();
+      });
+  });
+
+  it('PUT - update item', done => {
+    const itemToUpdateId = john.items[0].id;
+    const now = Date.now();
+
+    request(app)
+      .put(`/dayssince/api/item/${itemToUpdateId}`)
+      .set('Authorization', token)
+      .send({
+        date: now,
+        title: 'updated titile',
+      })
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, response) => {
+        const { body } = response;
+        if (err) return done(err);
+        expect(body).to.have.property('_id');
+        expect(new Date(body.date).getTime()).to.equal(now);
+        expect(body.title).to.equal('updated titile');
+
+        User.findById(userId).then(updatedUser => {
+          const updatedItem = updatedUser.items.find(
+            item => item._id == itemToUpdateId
+          );
+          expect(updatedItem.title).to.equal('updated titile');
+          expect(new Date(updatedItem.date).getTime()).to.equal(now);
+
+          done();
+        });
       });
   });
 });

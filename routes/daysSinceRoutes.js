@@ -40,7 +40,25 @@ router.get('/items', requireAuth, (req, res) => {
 });
 
 // Update Item
-router.put('/item/:id', requireAuth, (req, res) => {});
+router.put('/item/:id', requireAuth, (req, res) => {
+  User.findOneAndUpdate(
+    {
+      _id: req.user.id,
+      'items._id': req.params.id,
+    },
+    {
+      $set: {
+        'items.$.title': req.body.title,
+        'items.$.date': req.body.date,
+      },
+    },
+    { new: true },
+    (err, result) => {
+      const updatedItem = result.items.find(item => item._id == req.params.id);
+      res.send(updatedItem);
+    }
+  );
+});
 
 // Delete Item
 router.delete('/item/:id', requireAuth, (req, res) => {});
