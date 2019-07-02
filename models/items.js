@@ -7,3 +7,4 @@ const ItemSchema = new Schema({
 });
 
 mongoose.model('items', ItemSchema);
+module.exports = ItemSchema;
