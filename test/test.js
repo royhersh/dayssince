@@ -6,7 +6,6 @@ const request = require('supertest');
 const app = require('../serverApp');
 const tokenForUser = require('../services/genToken');
 const User = require('../models/users');
-const Item = require('../models/items');
 
 const MONGO_URL = 'mongodb://localhost/users_test';
 
@@ -22,7 +21,7 @@ before(done => {
   });
 });
 
-beforeEach(done => {
+beforeEach(async () => {
   // Create user for testing
   john = new User({
     googleId: 'someGoogleIdToken',
@@ -34,77 +33,60 @@ beforeEach(done => {
     ],
   });
 
-  john.save().then(user => {
-    expect(john.isNew).false;
-    userId = user.id;
-    token = tokenForUser(user);
-    // console.log(tokenForUser(user));
-    done();
-  });
-});
+  const user = await john.save();
 
-beforeEach(done => {
-  done();
+  expect(john.isNew).false;
+  userId = user.id;
+  token = tokenForUser(user);
 });
 
 describe('Testing dayssince API', () => {
-  it('Check version', done => {
-    request(app)
+  it('Check version', async () => {
+    const { body } = await request(app)
       .get('/dayssince/api/version')
       .set('Authorization', token)
-      .expect(200)
-      .end((err, { body }) => {
-        expect(body.version).to.equal('develop');
-        done();
-      });
+      .expect(200);
+
+    expect(body.version).to.equal('develop');
   });
 
-  it('POST - Add item', done => {
+  it('POST - Add item', async () => {
     const now = Date.now();
-    request(app)
+    const { body } = await request(app)
       .post('/dayssince/api/items')
       .set('Authorization', token)
       .send({
         date: now,
         title: 'new title',
       })
-      .expect(200)
-      .end((err, { body }) => {
-        if (err) return done(err);
-        expect(body).to.have.property('_id');
-        expect(new Date(body.date).getTime()).to.equal(now);
-        expect(body.title).to.equal('new title');
+      .expect(200);
 
-        User.findById(userId).then(savedUser => {
-          expect(savedUser.items.find(item => item._id == body._id)).to.be.an(
-            'object'
-          );
-          done();
-        });
-      });
+    expect(body).to.have.property('_id');
+    expect(new Date(body.date).getTime()).to.equal(now);
+    expect(body.title).to.equal('new title');
+
+    const savedUser = await User.findById(userId);
+    const newSavedItem = savedUser.items.find(item => item._id == body._id);
+    expect(newSavedItem).to.be.an('object');
   });
 
-  it('GET - get user items', done => {
-    request(app)
+  it('GET - get user items', async () => {
+    const { body } = await request(app)
       .get('/dayssince/api/items')
       .set('Authorization', token)
       .expect('Content-Type', /json/)
-      .expect(200)
-      .end((err, { body }) => {
-        if (err) return done(err);
-        expect(body).to.be.an('array');
-        expect(body.length).to.equal(1);
-        expect(body[0].title).to.equal('sample Title');
+      .expect(200);
 
-        done();
-      });
+    expect(body).to.be.an('array');
+    expect(body.length).to.equal(1);
+    expect(body[0].title).to.equal('sample Title');
   });
 
-  it('PUT - update item', done => {
+  it('PUT - update item', async () => {
     const itemToUpdateId = john.items[0].id;
     const now = Date.now();
 
-    request(app)
+    const { body } = await request(app)
       .put(`/dayssince/api/item/${itemToUpdateId}`)
       .set('Authorization', token)
       .send({
@@ -112,24 +94,19 @@ describe('Testing dayssince API', () => {
         title: 'updated titile',
       })
       .expect('Content-Type', /json/)
-      .expect(200)
-      .end((err, response) => {
-        const { body } = response;
-        if (err) return done(err);
-        expect(body).to.have.property('_id');
-        expect(new Date(body.date).getTime()).to.equal(now);
-        expect(body.title).to.equal('updated titile');
+      .expect(200);
 
-        User.findById(userId).then(updatedUser => {
-          const updatedItem = updatedUser.items.find(
-            item => item._id == itemToUpdateId
-          );
-          expect(updatedItem.title).to.equal('updated titile');
-          expect(new Date(updatedItem.date).getTime()).to.equal(now);
+    expect(body).to.have.property('_id');
+    expect(new Date(body.date).getTime()).to.equal(now);
+    expect(body.title).to.equal('updated titile');
 
-          done();
-        });
-      });
+    const updatedUser = await User.findById(userId);
+
+    const updatedItem = updatedUser.items.find(
+      item => item._id == itemToUpdateId
+    );
+    expect(updatedItem.title).to.equal('updated titile');
+    expect(new Date(updatedItem.date).getTime()).to.equal(now);
   });
 
   it("DELETE - Delete an item from user's items", async () => {
