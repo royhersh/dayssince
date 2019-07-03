@@ -131,4 +131,21 @@ describe('Testing dayssince API', () => {
         });
       });
   });
+
+  it("DELETE - Delete an item from user's items", async () => {
+    const userDocument = await User.findById({ _id: userId });
+    const itemIdToDelete = userDocument.items[0]._id;
+
+    await request(app)
+      .delete(`/dayssince/api/item/${itemIdToDelete}`)
+      .set('Authorization', token)
+      .expect('Content-Type', /json/)
+      .expect(200);
+
+    const updatedUserDocument = await User.findById({ _id: userId });
+    itemExistInDoc = updatedUserDocument.items.some(
+      item => item.id == itemIdToDelete
+    );
+    expect(itemExistInDoc).false;
+  });
 });

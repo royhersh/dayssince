@@ -61,6 +61,13 @@ router.put('/item/:id', requireAuth, (req, res) => {
 });
 
 // Delete Item
-router.delete('/item/:id', requireAuth, (req, res) => {});
+router.delete('/item/:id', requireAuth, async (req, res) => {
+  await User.updateOne(
+    { _id: req.user.id },
+    { $pull: { items: { _id: req.params.id } } }
+  );
+
+  res.send({ result: 'ok' });
+});
 
 module.exports = router;

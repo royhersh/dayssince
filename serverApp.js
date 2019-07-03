@@ -7,7 +7,7 @@ const keys = require('./config/keys');
 require('./models/users.js');
 require('./models/items.js');
 require('./services/passport');
-console.log('serverApp');
+
 const authRoutes = require('./routes/authRoutes');
 const daysSinceRoutes = require('./routes/daysSinceRoutes');
 
