@@ -34,6 +34,22 @@ router.post('/items', requireAuth, (req, res) => {
   );
 });
 
+// Replace all items
+router.post('/items/replace', requireAuth, (req, res) => {
+  User.findByIdAndUpdate(
+    req.user.id,
+    {
+      $set: {
+        items: req.body,
+      },
+    },
+    { new: true },
+    (err, _res) => {
+      res.send({ result: 'ok' });
+    }
+  );
+});
+
 // Read Items
 router.get('/items', requireAuth, (req, res) => {
   res.send(req.user.items);

@@ -70,6 +70,33 @@ describe('Testing dayssince API', () => {
     expect(newSavedItem).to.be.an('object');
   });
 
+  it('POST - Replace all items with new items', async () => {
+    const now = Date.now();
+    const { body } = await request(app)
+      .post('/dayssince/api/items/replace')
+      .set('Authorization', token)
+      .send([
+        {
+          date: now,
+          title: 'Replaced item one',
+        },
+        {
+          date: now,
+          title: 'Replaced item two',
+        },
+      ])
+      .expect(200);
+
+    expect(body.result).to.equal('ok');
+
+    const user = await User.findById(userId);
+    expect(user.items.find(item => item.title === 'sample Title')).to.not.exist;
+    expect(user.items.find(item => item.title === 'Replaced item one')).to
+      .exist;
+    expect(user.items.find(item => item.title === 'Replaced item two')).to
+      .exist;
+  });
+
   it('GET - get user items', async () => {
     const { body } = await request(app)
       .get('/dayssince/api/items')
