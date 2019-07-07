@@ -10,7 +10,7 @@ export default (state = [], action) => {
       return [
         ...state,
         {
-          id: Date.now(),
+          _id: Date.now(),
           ...action.payload,
         },
       ];
@@ -18,7 +18,7 @@ export default (state = [], action) => {
     case actions.CREATE_NEW_ITEM:
       return [
         {
-          id: Date.now(),
+          _id: Date.now(),
           date: Date.now(),
           editMode: true,
         },
@@ -26,10 +26,10 @@ export default (state = [], action) => {
       ];
 
     case actions.UPDATE_ITEM: {
-      const { id, ...rest } = action.payload;
+      const { _id, ...rest } = action.payload;
 
       return state.map((item) => {
-        if (item.id !== id) return item;
+        if (item._id !== _id) return item;
 
         return {
           ...item,
@@ -40,10 +40,10 @@ export default (state = [], action) => {
     }
 
     case actions.SET_EDIT_MODE: {
-      const { id } = action.payload;
+      const { _id } = action.payload;
 
       return state.map((item) => {
-        if (item.id === id) {
+        if (item._id === _id) {
           return {
             ...item,
             editMode: true,
@@ -54,10 +54,10 @@ export default (state = [], action) => {
     }
 
     case actions.UNSET_EDIT_MODE: {
-      const { id } = action.payload;
+      const { _id } = action.payload;
 
       return state.map((item) => {
-        if (item.id === id) {
+        if (item._id === _id) {
           return {
             ...item,
             editMode: false,
@@ -68,10 +68,10 @@ export default (state = [], action) => {
     }
 
     case actions.DELETE_ANIMATE: {
-      const { id } = action.payload;
+      const { _id } = action.payload;
 
       return state.map((item) => {
-        if (item.id === id) {
+        if (item._id === _id) {
           return {
             ...item,
             deleteAnimation: true,
@@ -82,9 +82,9 @@ export default (state = [], action) => {
     }
 
     case actions.DELETE_ITEM: {
-      const { id } = action.payload;
+      const { _id } = action.payload;
 
-      return state.filter(item => item.id !== id);
+      return state.filter(item => item._id !== _id);
     }
 
     default:

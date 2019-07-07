@@ -77,12 +77,16 @@ describe('Testing dayssince API', () => {
       .set('Authorization', token)
       .send([
         {
-          date: now,
-          title: 'Replaced item one',
+          _id: 1562163678455,
+          date: 1562163678455,
+          editMode: false,
+          title: 'Hello',
         },
         {
-          date: now,
-          title: 'Replaced item two',
+          _id: 1562163673811,
+          date: 1562163673811,
+          editMode: false,
+          title: 'World',
         },
       ])
       .expect(200);
@@ -91,10 +95,36 @@ describe('Testing dayssince API', () => {
 
     const user = await User.findById(userId);
     expect(user.items.find(item => item.title === 'sample Title')).to.not.exist;
-    expect(user.items.find(item => item.title === 'Replaced item one')).to
-      .exist;
-    expect(user.items.find(item => item.title === 'Replaced item two')).to
-      .exist;
+    expect(user.items.find(item => item.title === 'Hello')).to.exist;
+    expect(user.items.find(item => item.title === 'World')).to.exist;
+  });
+
+  it('POST - Merge database items with new items', async () => {
+    const now = Date.now();
+    const { body } = await request(app)
+      .post('/dayssince/api/items/merge')
+      .set('Authorization', token)
+      .send([
+        {
+          _id: 1562163678455,
+          date: 1562163678455,
+          editMode: false,
+          title: 'Hello',
+        },
+        {
+          _id: 1562163673811,
+          date: 1562163673811,
+          editMode: false,
+          title: 'World',
+        },
+      ])
+      .expect(200);
+    expect(body).to.be.an('array');
+
+    const user = await User.findById(userId);
+    expect(user.items.find(item => item.title === 'sample Title')).to.exist;
+    expect(user.items.find(item => item.title === 'Hello')).to.exist;
+    expect(user.items.find(item => item.title === 'World')).to.exist;
   });
 
   it('GET - get user items', async () => {

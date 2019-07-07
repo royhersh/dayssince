@@ -25,6 +25,7 @@ const googleLogin = new GoogleStrategy(
     proxy: true,
   },
   async (accessToken, refreshToken, profile, done) => {
+    console.log({ accessToken, refreshToken, profile });
     const existingUser = await User.findOne({ googleId: profile.id });
     console.log('existing user', existingUser);
     if (existingUser) {

@@ -9,6 +9,11 @@ const Item = mongoose.model('items');
 
 const requireAuth = passport.authenticate('jwt', { session: false });
 
+const removeIdProp = obj => {
+  const { _id, ...rest } = obj;
+  return rest;
+};
+
 router.get('/version', requireAuth, (req, res) => {
   res.send({ version: 'develop' });
 });
@@ -40,12 +45,28 @@ router.post('/items/replace', requireAuth, (req, res) => {
     req.user.id,
     {
       $set: {
-        items: req.body,
+        items: req.body.map(removeIdProp),
       },
     },
     { new: true },
     (err, _res) => {
       res.send({ result: 'ok' });
+    }
+  );
+});
+
+// Mrege items of request with db
+router.post('/items/merge', requireAuth, (req, res) => {
+  User.findByIdAndUpdate(
+    req.user.id,
+    {
+      $push: {
+        items: req.body.map(removeIdProp),
+      },
+    },
+    { new: true },
+    (err, _res) => {
+      res.send(_res.items);
     }
   );
 });

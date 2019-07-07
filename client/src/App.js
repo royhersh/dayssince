@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import queryString from 'query-string';
+import api from './utils/api';
 
 import * as actionCreators from './actions/index';
 // import ItemForm from './components/itemForm';
@@ -18,13 +19,29 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
-    const { fetchData, location } = this.props;
-    const { token: tokenFromUrl } = queryString.parse(location.search);
+  async componentDidMount() {
+    this.initialDataFetch();
+  }
 
-    fetchData();
+  async initialDataFetch() {
+    /* see logic in 'diagrams/login-logix.xml' (draw.io) */
+    const { populateItems, location } = this.props;
+    const { token: tokenFromUrl } = queryString.parse(location.search);
+    const itemsInLocalStorage = JSON.parse(localStorage.getItem('items')) || [];
+
     if (tokenFromUrl) {
       localStorage.setItem('token', tokenFromUrl);
+      const data = await api.POST.mergeItems(itemsInLocalStorage);
+      localStorage.removeItem('items');
+      populateItems(data);
+    } else {
+      const tokenInLocalStorage = localStorage.getItem('token');
+      if (tokenInLocalStorage) {
+        const data = await api.GET.items();
+        populateItems(data);
+      } else {
+        populateItems(itemsInLocalStorage);
+      }
     }
 
     const userToken = localStorage.getItem('token');
@@ -33,7 +50,7 @@ class App extends Component {
 
   renderItems() {
     const { items } = this.props;
-    return items.map(item => <DaysSinceItem key={item.id} {...item} />);
+    return items.map(item => <DaysSinceItem key={item._id} {...item} />);
   }
 
   render() {
@@ -86,9 +103,9 @@ App.propTypes = {
   createNewItem: PropTypes.func.isRequired, // create new item at the beginning of the array
   items: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number,
+      _id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       title: PropTypes.string,
-      date: PropTypes.number,
+      date: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     }),
   ),
 };

@@ -8,7 +8,7 @@ import Modal from './modal';
 class DaysSinceItem extends Component {
   static daysSinceDate(date) {
     const dayInMs = 86400000;
-    return Math.floor((Date.now() - date) / dayInMs);
+    return Math.floor((Date.now() - new Date(date).getTime()) / dayInMs);
   }
 
   constructor(props) {
@@ -45,29 +45,29 @@ class DaysSinceItem extends Component {
   handleTitleChange = e => this.setState({ title: e.target.value });
 
   handleClickOverlay = () => {
-    const { id, updateItem, unsetEditMode } = this.props;
+    const { _id, updateItem, unsetEditMode } = this.props;
     const { title, date } = this.state;
-    unsetEditMode(id);
-    updateItem({ id, title, date });
+    unsetEditMode(_id);
+    updateItem({ _id, title, date });
   };
 
   setEditMode = () => {
-    const { id, setEditMode, editMode } = this.props;
-    !editMode && setEditMode(id);
+    const { _id, setEditMode, editMode } = this.props;
+    !editMode && setEditMode(_id);
   };
 
   handleCancel = () => {
     const {
-      id, unsetEditMode, title, date,
+      _id, unsetEditMode, title, date,
     } = this.props;
 
     this.setState({ date, title });
-    unsetEditMode(id);
+    unsetEditMode(_id);
   };
 
   handleDeleteItem = () => {
-    const { id, deleteItem } = this.props;
-    deleteItem(id);
+    const { _id, deleteItem } = this.props;
+    deleteItem(_id);
   };
 
   render() {
@@ -140,9 +140,9 @@ class DaysSinceItem extends Component {
 DaysSinceItem.propTypes = {
   updateItem: PropTypes.func.isRequired,
   editMode: PropTypes.bool,
-  id: PropTypes.number.isRequired,
+  _id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   // title: PropTypes.string.isRequired,
-  date: PropTypes.number.isRequired,
+  date: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 };
 
 DaysSinceItem.defaultProps = {

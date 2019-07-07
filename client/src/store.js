@@ -4,8 +4,10 @@ import rootReducer from './reducers/rootReducer';
 import { FETCH_DATA } from './actions/types';
 
 const saveStateToLocalStorage = store => next => (action) => {
+  const isUserLoggedIn = !!localStorage.getItem('token');
+
   next(action);
-  if (action.type === FETCH_DATA /* ||  user.isLoggedIn */) return;
+  if (action.type === FETCH_DATA || isUserLoggedIn) return;
   const { items } = store.getState();
   localStorage.setItem('items', JSON.stringify(items));
 };

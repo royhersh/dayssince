@@ -7,6 +7,8 @@ module.exports = app => {
   app.get(
     '/auth/google',
     passport.authenticate('google', {
+      accessType: 'offline',
+      prompt: 'consent',
       scope: ['profile', 'email'],
     })
   );

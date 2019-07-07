@@ -1,13 +1,12 @@
 /* Actions */
+import axios from 'axios';
 import * as actions from './types';
 
-export const fetchData = () => {
-  const localState = JSON.parse(localStorage.getItem('items'));
-  return {
-    type: actions.FETCH_DATA,
-    payload: localState || [],
-  };
-};
+export const populateItems = items => ({
+  type: actions.FETCH_DATA,
+  payload: items,
+});
+
 export const addItem = ({ date, title }) => ({
   type: actions.ADD_ITEM,
   payload: { date, title },
@@ -22,25 +21,25 @@ export const updateItem = payload => ({
   payload,
 });
 
-export const setEditMode = id => ({
+export const setEditMode = _id => ({
   type: actions.SET_EDIT_MODE,
-  payload: { id },
+  payload: { _id },
 });
 
-export const unsetEditMode = id => ({
+export const unsetEditMode = _id => ({
   type: actions.UNSET_EDIT_MODE,
-  payload: { id },
+  payload: { _id },
 });
 
-export const deleteItem = id => (dispatch) => {
+export const deleteItem = _id => (dispatch) => {
   dispatch({
     type: actions.DELETE_ANIMATE,
-    payload: { id },
+    payload: { _id },
   });
   setTimeout(
     () => dispatch({
       type: actions.DELETE_ITEM,
-      payload: { id },
+      payload: { _id },
     }),
     500,
   );
