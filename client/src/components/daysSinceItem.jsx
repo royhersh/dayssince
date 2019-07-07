@@ -45,29 +45,29 @@ class DaysSinceItem extends Component {
   handleTitleChange = e => this.setState({ title: e.target.value });
 
   handleClickOverlay = () => {
-    const { _id, updateItem, unsetEditMode } = this.props;
+    const { id, updateItem, unsetEditMode } = this.props;
     const { title, date } = this.state;
-    unsetEditMode(_id);
-    updateItem({ _id, title, date });
+    unsetEditMode(id);
+    updateItem({ id, title, date });
   };
 
   setEditMode = () => {
-    const { _id, setEditMode, editMode } = this.props;
-    !editMode && setEditMode(_id);
+    const { id, setEditMode, editMode } = this.props;
+    !editMode && setEditMode(id);
   };
 
   handleCancel = () => {
     const {
-      _id, unsetEditMode, title, date,
+      id, unsetEditMode, title, date,
     } = this.props;
 
     this.setState({ date, title });
-    unsetEditMode(_id);
+    unsetEditMode(id);
   };
 
   handleDeleteItem = () => {
-    const { _id, deleteItem } = this.props;
-    deleteItem(_id);
+    const { id, deleteItem } = this.props;
+    deleteItem(id);
   };
 
   render() {
@@ -140,7 +140,7 @@ class DaysSinceItem extends Component {
 DaysSinceItem.propTypes = {
   updateItem: PropTypes.func.isRequired,
   editMode: PropTypes.bool,
-  _id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   // title: PropTypes.string.isRequired,
   date: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 };

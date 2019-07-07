@@ -50,7 +50,7 @@ class App extends Component {
 
   renderItems() {
     const { items } = this.props;
-    return items.map(item => <DaysSinceItem key={item._id} {...item} />);
+    return items.map(item => <DaysSinceItem key={item.id} {...item} />);
   }
 
   render() {
@@ -90,20 +90,16 @@ class App extends Component {
             <i className={footerIconClass} />
           </a>
         </div>
-        {/* showForm &&
-        <ItemForm onClose={this.handleCloseItemForm} onSave={this.handleAddItem} /> */}
       </div>
     );
   }
 }
 
 App.propTypes = {
-  fetchData: PropTypes.func.isRequired, // action-creator - fetch data from database
-  addItem: PropTypes.func.isRequired,
   createNewItem: PropTypes.func.isRequired, // create new item at the beginning of the array
   items: PropTypes.arrayOf(
     PropTypes.shape({
-      _id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       title: PropTypes.string,
       date: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     }),

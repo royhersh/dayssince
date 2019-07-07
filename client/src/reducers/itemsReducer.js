@@ -6,30 +6,14 @@ export default (state = [], action) => {
       return action.payload;
     }
 
-    case actions.ADD_ITEM:
-      return [
-        ...state,
-        {
-          _id: Date.now(),
-          ...action.payload,
-        },
-      ];
-
     case actions.CREATE_NEW_ITEM:
-      return [
-        {
-          _id: Date.now(),
-          date: Date.now(),
-          editMode: true,
-        },
-        ...state,
-      ];
+      return [action.payload, ...state];
 
     case actions.UPDATE_ITEM: {
-      const { _id, ...rest } = action.payload;
+      const { id, ...rest } = action.payload;
 
       return state.map((item) => {
-        if (item._id !== _id) return item;
+        if (item.id !== id) return item;
 
         return {
           ...item,
@@ -39,11 +23,24 @@ export default (state = [], action) => {
       });
     }
 
-    case actions.SET_EDIT_MODE: {
-      const { _id } = action.payload;
+    case actions.UPDATE_DB_ID: {
+      const { id, dbId } = action.payload;
 
       return state.map((item) => {
-        if (item._id === _id) {
+        if (item.id !== id) return item;
+
+        return {
+          ...item,
+          dbId,
+        };
+      });
+    }
+
+    case actions.SET_EDIT_MODE: {
+      const { id } = action.payload;
+
+      return state.map((item) => {
+        if (item.id === id) {
           return {
             ...item,
             editMode: true,
@@ -54,10 +51,10 @@ export default (state = [], action) => {
     }
 
     case actions.UNSET_EDIT_MODE: {
-      const { _id } = action.payload;
+      const { id } = action.payload;
 
       return state.map((item) => {
-        if (item._id === _id) {
+        if (item.id === id) {
           return {
             ...item,
             editMode: false,
@@ -68,10 +65,10 @@ export default (state = [], action) => {
     }
 
     case actions.DELETE_ANIMATE: {
-      const { _id } = action.payload;
+      const { id } = action.payload;
 
       return state.map((item) => {
-        if (item._id === _id) {
+        if (item.id === id) {
           return {
             ...item,
             deleteAnimation: true,
@@ -82,9 +79,9 @@ export default (state = [], action) => {
     }
 
     case actions.DELETE_ITEM: {
-      const { _id } = action.payload;
+      const { id } = action.payload;
 
-      return state.filter(item => item._id !== _id);
+      return state.filter(item => item.id !== id);
     }
 
     default:
