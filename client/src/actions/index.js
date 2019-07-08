@@ -1,5 +1,6 @@
 /* Actions */
 import * as actions from './types';
+import { isLoggedIn } from '../utils/common';
 import api from '../utils/api';
 
 export const populateItems = items => ({
@@ -17,17 +18,18 @@ export const createNewItem = () => async (dispatch) => {
   dispatch({
     type: actions.CREATE_NEW_ITEM,
     payload: {
-      id: now,
+      renderId: now,
       date: now,
       editMode: true,
     },
   });
+  if (isLoggedIn()) {
+    // call api to create item
+    const newItem = await api.POST.createItem({ date: now, title: '' });
 
-  // call api to create item
-  const newItem = await api.POST.createItem({ date: now, title: '' });
-
-  // when come back, update id from db
-  dispatch(updateDbId({ id: now, dbId: newItem._id }));
+    // when come back, update id from db
+    dispatch(updateDbId({ renderId: now, dbId: newItem._id }));
+  }
 };
 
 export const updateItem = payload => ({
@@ -37,23 +39,23 @@ export const updateItem = payload => ({
 
 export const setEditMode = id => ({
   type: actions.SET_EDIT_MODE,
-  payload: { id },
+  payload: { renderId: id },
 });
 
 export const unsetEditMode = id => ({
   type: actions.UNSET_EDIT_MODE,
-  payload: { id },
+  payload: { renderId: id },
 });
 
 export const deleteItem = id => (dispatch) => {
   dispatch({
     type: actions.DELETE_ANIMATE,
-    payload: { id },
+    payload: { renderId: id },
   });
   setTimeout(
     () => dispatch({
       type: actions.DELETE_ITEM,
-      payload: { id },
+      payload: { renderId: id },
     }),
     500,
   );

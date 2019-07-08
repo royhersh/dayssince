@@ -7,7 +7,7 @@ const setAuthToken = () => {
   axios.defaults.headers.common.Authorization = userToken;
 };
 
-const copy_idToId = items => items.map(item => ({ ...item, id: item._id }));
+const copy_idToId = items => items.map(item => ({ ...item, renderId: item._id }));
 // GET
 const getItems = async () => {
   setAuthToken();

@@ -10,10 +10,10 @@ export default (state = [], action) => {
       return [action.payload, ...state];
 
     case actions.UPDATE_ITEM: {
-      const { id, ...rest } = action.payload;
+      const { renderId, ...rest } = action.payload;
 
       return state.map((item) => {
-        if (item.id !== id) return item;
+        if (item.renderId !== renderId) return item;
 
         return {
           ...item,
@@ -24,10 +24,10 @@ export default (state = [], action) => {
     }
 
     case actions.UPDATE_DB_ID: {
-      const { id, dbId } = action.payload;
+      const { renderId, dbId } = action.payload;
 
       return state.map((item) => {
-        if (item.id !== id) return item;
+        if (item.renderId !== renderId) return item;
 
         return {
           ...item,
@@ -37,10 +37,10 @@ export default (state = [], action) => {
     }
 
     case actions.SET_EDIT_MODE: {
-      const { id } = action.payload;
+      const { renderId } = action.payload;
 
       return state.map((item) => {
-        if (item.id === id) {
+        if (item.renderId === renderId) {
           return {
             ...item,
             editMode: true,
@@ -51,10 +51,10 @@ export default (state = [], action) => {
     }
 
     case actions.UNSET_EDIT_MODE: {
-      const { id } = action.payload;
+      const { renderId } = action.payload;
 
       return state.map((item) => {
-        if (item.id === id) {
+        if (item.renderId === renderId) {
           return {
             ...item,
             editMode: false,
@@ -65,10 +65,10 @@ export default (state = [], action) => {
     }
 
     case actions.DELETE_ANIMATE: {
-      const { id } = action.payload;
+      const { renderId } = action.payload;
 
       return state.map((item) => {
-        if (item.id === id) {
+        if (item.renderId === renderId) {
           return {
             ...item,
             deleteAnimation: true,
@@ -79,9 +79,9 @@ export default (state = [], action) => {
     }
 
     case actions.DELETE_ITEM: {
-      const { id } = action.payload;
+      const { renderId } = action.payload;
 
-      return state.filter(item => item.id !== id);
+      return state.filter(item => item.renderId !== renderId);
     }
 
     default:

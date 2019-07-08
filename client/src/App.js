@@ -32,8 +32,8 @@ class App extends Component {
     if (tokenFromUrl) {
       localStorage.setItem('token', tokenFromUrl);
       const data = await api.POST.mergeItems(itemsInLocalStorage);
-      localStorage.removeItem('items');
       populateItems(data);
+      localStorage.removeItem('items');
     } else {
       const tokenInLocalStorage = localStorage.getItem('token');
       if (tokenInLocalStorage) {
@@ -50,7 +50,7 @@ class App extends Component {
 
   renderItems() {
     const { items } = this.props;
-    return items.map(item => <DaysSinceItem key={item.id} {...item} />);
+    return items.map(item => <DaysSinceItem key={item.renderId} {...item} />);
   }
 
   render() {
@@ -99,7 +99,7 @@ App.propTypes = {
   createNewItem: PropTypes.func.isRequired, // create new item at the beginning of the array
   items: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      renderId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       title: PropTypes.string,
       date: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     }),
