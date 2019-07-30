@@ -24,14 +24,14 @@ export default (state = [], action) => {
     }
 
     case actions.UPDATE_DB_ID: {
-      const { renderId, dbId } = action.payload;
+      const { renderId, _id } = action.payload;
 
       return state.map((item) => {
         if (item.renderId !== renderId) return item;
 
         return {
           ...item,
-          dbId,
+          _id,
         };
       });
     }

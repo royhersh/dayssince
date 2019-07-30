@@ -29,6 +29,20 @@ const createItem = async ({ date, title }) => {
   return data;
 };
 
+// PUT
+const updateItem = async ({ id, date, title }) => {
+  setAuthToken();
+  const { data } = await axios.put(`${API_PREFIX}item/${id}`, { date, title });
+  return data;
+};
+
+// DELETE
+const deleteItem = async (id) => {
+  setAuthToken();
+  const { data } = await axios.delete(`${API_PREFIX}item/${id}`);
+  return data;
+};
+
 export default {
   GET: {
     items: getItems,
@@ -36,5 +50,11 @@ export default {
   POST: {
     mergeItems,
     createItem,
+  },
+  PUT: {
+    updateItem,
+  },
+  DELETE: {
+    deleteItem,
   },
 };

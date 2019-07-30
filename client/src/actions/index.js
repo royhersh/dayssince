@@ -28,14 +28,24 @@ export const createNewItem = () => async (dispatch) => {
     const newItem = await api.POST.createItem({ date: now, title: '' });
 
     // when come back, update id from db
-    dispatch(updateDbId({ renderId: now, dbId: newItem._id }));
+    dispatch(updateDbId({ renderId: now, _id: newItem._id }));
   }
 };
 
-export const updateItem = payload => ({
-  type: actions.UPDATE_ITEM,
-  payload,
-});
+export const updateItem = payload => async (dispatch) => {
+  const {
+    renderId, _id, date, title,
+  } = payload;
+  dispatch({ type: actions.UPDATE_ITEM, payload });
+  if (isLoggedIn()) {
+    const updatedItem = await api.PUT.updateItem({
+      id: _id || renderId,
+      date,
+      title,
+    });
+    console.log(updateItem);
+  }
+};
 
 export const setEditMode = id => ({
   type: actions.SET_EDIT_MODE,
@@ -47,16 +57,21 @@ export const unsetEditMode = id => ({
   payload: { renderId: id },
 });
 
-export const deleteItem = id => (dispatch) => {
+export const deleteItem = (renderId, _id) => async (dispatch) => {
   dispatch({
     type: actions.DELETE_ANIMATE,
-    payload: { renderId: id },
+    payload: { renderId },
   });
   setTimeout(
     () => dispatch({
       type: actions.DELETE_ITEM,
-      payload: { renderId: id },
+      payload: { renderId },
     }),
     500,
   );
+  if (isLoggedIn()) {
+    console.log('delete item id', renderId, _id);
+    await api.DELETE.deleteItem(_id);
+    console.log(updateItem);
+  }
 };
