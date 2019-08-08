@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import queryString from 'query-string';
-import api from './utils/api';
 
 import * as actionCreators from './actions/index';
-// import ItemForm from './components/itemForm';
+import api from './utils/api';
+
 import DaysSinceItem from './components/daysSinceItem';
 
 import './sass/main.scss';
 
-class App extends Component {
+export class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,9 +30,9 @@ class App extends Component {
     const itemsInLocalStorage = JSON.parse(localStorage.getItem('items')) || [];
 
     if (tokenFromUrl) {
-      localStorage.setItem('token', tokenFromUrl);
       const data = await api.POST.mergeItems(itemsInLocalStorage);
       populateItems(data);
+      localStorage.setItem('token', tokenFromUrl);
       localStorage.removeItem('items');
     } else {
       const tokenInLocalStorage = localStorage.getItem('token');
@@ -96,6 +96,8 @@ class App extends Component {
 }
 
 App.propTypes = {
+  location: PropTypes.any.isRequired, // From react-router
+  populateItems: PropTypes.func.isRequired, // Redux action
   createNewItem: PropTypes.func.isRequired, // create new item at the beginning of the array
   items: PropTypes.arrayOf(
     PropTypes.shape({
