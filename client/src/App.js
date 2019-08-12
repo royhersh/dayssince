@@ -54,13 +54,9 @@ export class App extends Component {
   }
 
   render() {
-    // const { showForm } = this.state;
     const { createNewItem, showPlusButton } = this.props;
     const { userToken } = this.state;
-    const addButtonClass = classNames({
-      'add-button': true,
-      'add-button--hidden': !showPlusButton,
-    });
+
     const footerClass = classNames('footer__login-icon', {
       'footer__login-icon--loggedin': userToken,
     });
@@ -69,12 +65,12 @@ export class App extends Component {
       'fas fa-user': userToken,
     });
 
-    return (
-      <div className="app-wrapper">
-        <div className="header">Days Since</div>
-        <div className="items-container">{this.renderItems()}</div>
-        <div id="modal" />
-
+    const plusButton = () => {
+      const addButtonClass = classNames({
+        'add-button': true,
+        'add-button--hidden': !showPlusButton,
+      });
+      return (
         <div
           className={addButtonClass}
           role="button"
@@ -84,6 +80,16 @@ export class App extends Component {
         >
           +
         </div>
+      );
+    };
+
+    return (
+      <div className="app-wrapper">
+        <div className="header">Days Since</div>
+        <div className="items-container">{this.renderItems()}</div>
+        <div id="modal" />
+
+        {plusButton()}
 
         <div className="footer ">
           <a href="/auth/google" className={footerClass}>
@@ -96,9 +102,12 @@ export class App extends Component {
 }
 
 App.propTypes = {
-  location: PropTypes.any.isRequired, // From react-router
+  location: PropTypes.shape({
+    search: PropTypes.string,
+  }).isRequired, // From react-router
   populateItems: PropTypes.func.isRequired, // Redux action
   createNewItem: PropTypes.func.isRequired, // create new item at the beginning of the array
+  showPlusButton: PropTypes.bool,
   items: PropTypes.arrayOf(
     PropTypes.shape({
       renderId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -110,9 +119,10 @@ App.propTypes = {
 
 App.defaultProps = {
   items: [],
+  showPlusButton: true,
 };
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   items: state.items,
   showPlusButton: state.ui.showPlusButton,
 });
