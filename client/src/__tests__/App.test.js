@@ -1,11 +1,8 @@
 import React from 'react';
-// import ReactDOM from 'react-dom';
 import Enzyme, { shallow, render, mount } from 'enzyme';
-// import toJson from 'enzyme-to-json';
 import Adapter from 'enzyme-adapter-react-16';
 import api from '../utils/api';
 import { App, mapStateToProps } from '../App';
-import DaysSinceItem from '../components/daysSinceItem';
 
 require('jest-localstorage-mock');
 
@@ -145,7 +142,6 @@ describe('<App />', () => {
     it('render plus button ', async () => {
       const wrapper = await shallow(<App {...props} />);
       await flushPromises();
-      console.log(wrapper.debug());
       const plusButton = wrapper.find('.add-button');
 
       expect(plusButton.exists()).toBe(true);
