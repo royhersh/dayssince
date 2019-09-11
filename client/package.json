@@ -39,10 +39,6 @@
   "devDependencies": {
     "@testing-library/react": "^8.0.9",
     "enzyme": "^3.10.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-import": "^2.17.2",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.12.4",
     "jest-extended": "^0.11.2",
     "jest-localstorage-mock": "^2.4.0",
     "jsdom": "^15.1.1"
