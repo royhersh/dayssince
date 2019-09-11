@@ -2,12 +2,38 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "node",
+      "request": "launch",
+      "name": "Test Front End",
+      "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+
+      "internalConsoleOptions": "openOnSessionStart",
+      "env": {
+        "NODE_ENV": "test"
+      }
+    },
+    {
       "name": "Debug CRA Tests",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "${workspaceRoot}/client/node_modules/.bin/react-scripts",
       "args": ["test", "--runInBand", "--no-cache", "--watchAll=false"],
       "cwd": "${workspaceRoot}/client",
+      "protocol": "inspector",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "env": {
+        "CI": "true"
+      },
+      "disableOptimisticBPs": true
+    },
+    {
+      "name": "Test Backend",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceRoot}/npm",
+      "args": ["run", "test", "--runInBand", "--no-cache", "--watchAll=false"],
+      "cwd": "${workspaceRoot}",
       "protocol": "inspector",
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",

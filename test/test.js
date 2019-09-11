@@ -16,7 +16,14 @@ before(done => {
   mongoose.set('useFindAndModify', false);
   mongoose.connect(MONGO_URL, { useNewUrlParser: true });
   mongoose.connection.once('open', done).on('error', error => {
-    console.log('WARNING:', error.name);
+    if (error.name === 'MongoNetworkError')
+      console.log(
+        "WARNING: Can't connect to mongoDB server, Have you started the server?"
+      );
+    else {
+      console.log(error);
+    }
+
     process.exit(1);
   });
 });

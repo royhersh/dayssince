@@ -7,19 +7,19 @@ const setAuthToken = () => {
   axios.defaults.headers.common.Authorization = userToken;
 };
 
-const copy_idToId = items => items.map(item => ({ ...item, renderId: item._id }));
+const copyIdToRenderId = items => items.map(item => ({ ...item, renderId: item._id }));
 // GET
 const getItems = async () => {
   setAuthToken();
   const { data } = await axios.get(`${API_PREFIX}items`);
-  return copy_idToId(data);
+  return copyIdToRenderId(data);
 };
 
 // POST
 const mergeItems = async (items) => {
   setAuthToken();
   const { data } = await axios.post(`${API_PREFIX}items/merge`, items);
-  return copy_idToId(data);
+  return copyIdToRenderId(data);
 };
 
 // POST

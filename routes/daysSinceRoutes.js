@@ -55,7 +55,7 @@ router.post('/items/replace', requireAuth, (req, res) => {
   );
 });
 
-// Mrege items of request with db
+// Merge items of request with db
 router.post('/items/merge', requireAuth, (req, res) => {
   User.findByIdAndUpdate(
     req.user.id,
@@ -78,14 +78,6 @@ router.get('/items', requireAuth, (req, res) => {
 
 // Update Item
 router.put('/item/:id', requireAuth, (req, res) => {
-  console.log(
-    `ID is §${req.params.id}§`,
-    mongoose.Types.ObjectId.isValid(req.params.id)
-  );
-  console.log(
-    `User ID is §${req.user.id}§`,
-    mongoose.Types.ObjectId.isValid(req.user.id)
-  );
   User.findOneAndUpdate(
     {
       _id: req.user.id,
@@ -104,7 +96,6 @@ router.put('/item/:id', requireAuth, (req, res) => {
         return;
       }
       const updatedItem = result.items.find(item => item._id == req.params.id);
-      console.log(updatedItem);
       res.send(updatedItem);
     }
   );

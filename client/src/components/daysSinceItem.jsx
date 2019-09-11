@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
+import moment from 'moment';
 import * as actionCreators from '../actions/index';
 import Modal from './modal';
 
-class DaysSinceItem extends Component {
+export class DaysSinceItem extends Component {
   static daysSinceDate(date) {
     const dayInMs = 86400000;
     return Math.floor((Date.now() - new Date(date).getTime()) / dayInMs);
@@ -17,11 +18,9 @@ class DaysSinceItem extends Component {
 
     this.state = {
       title: props.title || '',
-      date: props.date || Date.now(),
+      date: props.date,
       preAnimate: true,
     };
-
-    // this.handleDateChange = this.handleDateChange.bind(this);
   }
 
   componentDidMount() {
@@ -67,21 +66,19 @@ class DaysSinceItem extends Component {
     const {
       renderId, unsetEditMode, title, date,
     } = this.props;
-
     this.setState({ date, title });
     unsetEditMode(renderId);
   };
 
   handleDeleteItem = () => {
     const { _id, renderId, deleteItem } = this.props;
-    console.log(this.props);
     deleteItem(renderId, _id);
   };
 
   render() {
-    const { editMode, deleteAnimation } = this.props;
+    const { editMode, deleteAnimation, tabIndex } = this.props;
     const { title, date, preAnimate } = this.state;
-    const daysSince = DaysSinceItem.daysSinceDate(date);
+    const daysSinceCounter = DaysSinceItem.daysSinceDate(date);
 
     const itemStyle = {
       zIndex: Number(editMode),
@@ -97,16 +94,20 @@ class DaysSinceItem extends Component {
         className={classNames(itemClass)}
         style={itemStyle}
         onClick={this.setEditMode}
+        onKeyPress={this.setEditMode}
+        tabIndex={tabIndex}
         role="button"
       >
         <div className="item-info">
           <div className="item-info__counter">
-            {daysSince}
+            {daysSinceCounter}
             <input
               id="item-form__date__input"
               className="item-form__date__input"
               type="date"
+              value={moment(date).format('YYYY-MM-DD')} // This is needed so ios wont reset the date on click
               name="since"
+              pseudo="-webkit-date-and-time-value"
               required="required"
               onChange={this.handleDateChange}
             />
@@ -135,10 +136,22 @@ class DaysSinceItem extends Component {
           )}
         </div>
         <div className="item-edit">
-          <i onClick={this.handleCancel} className="icon icon--cancel fas fa-times" />
-          <i className="icon far fa-calendar-alt" />
-          <i className="icon far fa-calendar-check" />
-          <i onClick={this.handleDeleteItem} className="icon far fa-trash-alt" />
+          <i
+            onClick={this.handleCancel}
+            onKeyPress={this.handleCancel}
+            className="icon icon--cancel fas fa-times"
+            role="button"
+            tabIndex="0"
+          />
+          <i className="icon far fa-calendar-alt" role="button" tabIndex="0" />
+          <i className="icon far fa-calendar-check" role="button" tabIndex="0" />
+          <i
+            onClick={this.handleDeleteItem}
+            onKeyPress={this.handleDeleteItem}
+            className="icon icon--delete far fa-trash-alt"
+            role="button"
+            tabIndex="0"
+          />
         </div>
       </div>
     );
@@ -146,15 +159,27 @@ class DaysSinceItem extends Component {
 }
 
 DaysSinceItem.propTypes = {
-  updateItem: PropTypes.func.isRequired,
-  editMode: PropTypes.bool,
-  renderId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-  // title: PropTypes.string.isRequired,
+  /* UI Props */
+  tabIndex: PropTypes.number.isRequired, // index for focusing items
+  _id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // id from DB
+  renderId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]), // when we don't have _id from db we use renderId
+  title: PropTypes.string,
   date: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  editMode: PropTypes.bool,
+  /* CRUD Props */
+  setEditMode: PropTypes.func.isRequired,
+  unsetEditMode: PropTypes.func.isRequired,
+  updateItem: PropTypes.func.isRequired,
+  deleteItem: PropTypes.func.isRequired,
+  deleteAnimation: PropTypes.bool,
 };
 
 DaysSinceItem.defaultProps = {
+  title: '',
+  _id: undefined,
+  renderId: undefined,
   editMode: false,
+  deleteAnimation: false,
 };
 
 export default connect(

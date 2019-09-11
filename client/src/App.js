@@ -30,10 +30,10 @@ export class App extends Component {
     const itemsInLocalStorage = JSON.parse(localStorage.getItem('items')) || [];
 
     if (tokenFromUrl) {
-      const data = await api.POST.mergeItems(itemsInLocalStorage);
-      populateItems(data);
       localStorage.setItem('token', tokenFromUrl);
       localStorage.removeItem('items');
+      const data = await api.POST.mergeItems(itemsInLocalStorage);
+      populateItems(data);
     } else {
       const tokenInLocalStorage = localStorage.getItem('token');
       if (tokenInLocalStorage) {
@@ -50,7 +50,9 @@ export class App extends Component {
 
   renderItems() {
     const { items } = this.props;
-    return items.map(item => <DaysSinceItem key={item.renderId} {...item} />);
+    return items.map((item, index) => (
+      <DaysSinceItem key={item.renderId} tabIndex={index} {...item} />
+    ));
   }
 
   render() {

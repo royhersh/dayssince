@@ -54,7 +54,8 @@ describe('<App />', () => {
        * 4. remove items in localStorage
        */
       const dataInLocalStorage = 'data in localStorage';
-      localStorage.setItem('items', JSON.stringify(dataInLocalStorage));
+      // eslint-disable-next-line no-underscore-dangle
+      localStorage.__STORE__.items = JSON.stringify(dataInLocalStorage);
       api.POST.mergeItems.mockImplementation(async () => 'merged data');
 
       await shallow(
@@ -66,7 +67,7 @@ describe('<App />', () => {
         />,
       );
       await flushPromises();
-
+      expect(localStorage.setItem).toHaveBeenCalledBefore(api.POST.mergeItems);
       expect(api.POST.mergeItems.mock.calls[0][0]).toEqual(dataInLocalStorage);
       expect(populateItems.mock.calls[0][0]).toEqual('merged data');
       expect(localStorage.setItem).toHaveBeenLastCalledWith('token', 'tokenString');

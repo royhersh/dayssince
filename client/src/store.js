@@ -11,15 +11,8 @@ const saveStateToLocalStorage = store => next => (action) => {
   const { items } = store.getState();
   localStorage.setItem('items', JSON.stringify(items));
 };
-/* eslint-disable no-underscore-dangle */
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(
-  rootReducer,
-  composeEnhancers(applyMiddleware(ReduxThunk, saveStateToLocalStorage)),
-);
-/* eslint-enable */
 
-/* store.subscribe(() => {
-  console.log(store.getState());
-}); */
-export default store;
+// eslint-disable-next-line no-underscore-dangle
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+export default () => createStore(rootReducer, composeEnhancers(applyMiddleware(ReduxThunk, saveStateToLocalStorage)));

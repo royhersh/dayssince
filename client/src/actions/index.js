@@ -43,7 +43,6 @@ export const updateItem = payload => async (dispatch) => {
       date,
       title,
     });
-    console.log(updateItem);
   }
 };
 
@@ -70,8 +69,6 @@ export const deleteItem = (renderId, _id) => async (dispatch) => {
     500,
   );
   if (isLoggedIn()) {
-    console.log('delete item id', renderId, _id);
     await api.DELETE.deleteItem(_id);
-    console.log(updateItem);
   }
 };
