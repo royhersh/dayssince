@@ -1,0 +1,19 @@
+{
+  "name": "dayssince",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/royhersh/dayssince.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/royhersh/dayssince/issues"
+  },
+  "homepage": "https://github.com/royhersh/dayssince#readme"
+}
