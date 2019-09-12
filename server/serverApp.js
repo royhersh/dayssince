@@ -14,7 +14,11 @@ const daysSinceRoutes = require('./routes/daysSinceRoutes');
 
 mongoose.set('useNewUrlParser', true);
 if (process.env.NODE_ENV !== 'test') {
-  mongoose.connect(keys.mongoURI);
+  console.log('connecto to:', keys.mongoURI);
+  mongoose.connect(keys.mongoURI).catch(err => {
+    console.log('ERROR - ', err);
+    process.exit(1);
+  });
 }
 
 const app = express();

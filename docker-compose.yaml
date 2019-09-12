@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  ####################
+  # Setup server
+  ####################
+  server:
+    build: ./server
+    links:
+      - mongo
+    expose:
+      - 5000
+    restart: on-failure
+    command: npm run start
+  ####################
+  # Setup client
+  ####################
+  client:
+    build: ./client
+    expose:
+      - 3000
+    ports:
+      - '3000:3000'
+    command: npm run start
+  ####################
+  # Setup MongoDB
+  ####################
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - '27017:27017'
