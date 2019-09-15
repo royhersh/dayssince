@@ -3,8 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "client": "npm run start --prefix client",
+    "server": "nodemon server/index.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "dev:docker": "docker-compose -f docker-compose.dev.yaml up --build",
+    "prod:docker": "docker-compose -f docker-compose.yaml -f docker-compose.prod.yaml up --build",
+    "buildClient": "npm run build --prefix client",
+    "start": "npm run start --prefix server",
+    "build": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "repository": {
     "type": "git",
@@ -15,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/royhersh/dayssince/issues"
   },
-  "homepage": "https://github.com/royhersh/dayssince#readme"
+  "homepage": "https://github.com/royhersh/dayssince#readme",
+  "devDependencies": {
+    "concurrently": "^4.1.0"
+  }
 }

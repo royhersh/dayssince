@@ -44,3 +44,35 @@ services:
       - client
 volumes:
   app-static:
+
+ersion: '3.2'
+
+services:
+  ####################
+  # Setup server
+  ####################
+  # server:
+  #   build: ./server
+  #   links:
+  #     - mongo
+  #   expose:
+  #     - 5000
+  #   restart: on-failure
+  #   command: npm run start
+  ####################
+  # Setup client
+  ####################
+  client:
+    command: npm run build
+    environment:
+      - NODE_ENV=production
+  ####################
+  # Setup MongoDB
+  ####################
+  # mongo:
+  #   container_name: mongo
+  #   image: mongo
+  #   volumes:
+  #     - ./data:/data/db
+  #   ports:
+  #     - '27017:27017'

@@ -7,7 +7,7 @@ RUN npm install
 
 COPY . /usr/src/app
 
-CMD [ "npm", "start" ]
+# CMD [ "npm", "start" ]
 # FROM node:10.15.3
 
 # LABEL maintainet="Roy Hershkovitz"
