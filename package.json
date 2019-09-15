@@ -10,7 +10,7 @@
     "prod:docker": "docker-compose -f docker-compose.yaml -f docker-compose.prod.yaml up --build",
     "buildClient": "npm run build --prefix client",
     "start": "npm run start --prefix server",
-    "build": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "build": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client && npm install --prefix server"
   },
   "repository": {
     "type": "git",
