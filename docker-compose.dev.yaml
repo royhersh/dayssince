@@ -8,6 +8,8 @@ services:
     build: ./server
     depends_on:
       - mongo
+    environment:
+      - PLATFORM=docker-compose
     expose:
       - 5000
     restart: on-failure
@@ -24,6 +26,9 @@ services:
       - 3000
     ports:
       - '3000:3000'
+    # working_dir: /usr/src/app
+    volumes:
+      - ./client:/usr/src/app
 
   ####################
   # Setup MongoDB
@@ -35,14 +40,6 @@ services:
       - data-db:/data/db
     ports:
       - '27017:27017'
-  # nginx:
-  #   image: nginx:latest
-  #   ports:
-  #     - '8080:8080'
-  #   volumes:
-  #     - app-static:/srv/www/static
-  #     - ./default.conf:/etc/nginx/conf.d/default.conf
-  #   depends_on:
-  #     - client
+
 volumes:
   data-db:

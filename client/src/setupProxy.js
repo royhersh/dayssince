@@ -13,5 +13,7 @@ module.exports = function (app) {
     default:
       serverDomain = 'localhost';
   }
-  app.use(proxy(['/api', '/auth/google', '/dayssince/api'], { target: 'http://server:5000' }));
+  app.use(
+    proxy(['/api', '/auth/google', '/dayssince/api'], { target: `http://${serverDomain}:5000` }),
+  );
 };

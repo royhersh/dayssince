@@ -1,0 +1,52 @@
+# Stage 1 - the build process
+FROM node:10.15.3-alpine as build-step
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+RUN npm install
+COPY . /usr/src/app
+RUN npm run build
+
+# Stage 2 - the production environment
+FROM nginx:1.12-alpine
+COPY --from=build-step /usr/src/app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+
+# FROM node:10.15.3-alpine as build-step
+# RUN mkdir -p /usr/src/app
+# WORKDIR /usr/src/app
+
+# COPY package*.json ./
+# RUN npm install
+
+# COPY . /usr/src/app
+# RUN npm run build
+# FROM: nginx:1.17.3-alpine
+# COPY --from=build-step /usr/src/app/build /usr/share/html
+# EXPOSE 80
+# CMD ["nginx", "-g", "daemon off;"]
+
+# CMD [ "npm", "start" ]
+# FROM node:10.15.3
+
+# LABEL maintainet="Roy Hershkovitz"
+
+# ENV NODE_ENV=development
+# ENV PORT=3000
+
+# #COPY . /var/www
+# WORKDIR /var/www
+
+
+# RUN pwd
+# RUN git clone https://github.com/royhersh/dayssince.git /var/www
+# RUN pwd
+# RUN ls -la
+# RUN git checkout developå
+# RUN npm install
+
+# EXPOSE ${PORT}
+# ENTRYPOINT ["npm", "start"]
+# VOLUME ["/var/www"]

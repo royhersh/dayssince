@@ -5,7 +5,7 @@
   "scripts": {
     "client": "npm run start --prefix client",
     "server": "nodemon server/index.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "dev:local": "concurrently \"npm run server\" \"npm run client\"",
     "dev:docker": "docker-compose -f docker-compose.dev.yaml up --build",
     "prod:docker": "docker-compose -f docker-compose.yaml -f docker-compose.prod.yaml up --build",
     "buildClient": "npm run build --prefix client",

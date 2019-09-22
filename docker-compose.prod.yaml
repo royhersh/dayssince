@@ -1,78 +1,30 @@
 version: '3'
-
 services:
   ####################
   # Setup server
   ####################
-  # server:
-  #   build: ./server
-  #   links:
-  #     - mongo
-  #   expose:
-  #     - 5000
-  #   restart: on-failure
-  #   command: npm run start
-  ####################
-  # Setup client
-  ####################
-  client:
-    build: ./client
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.prod
+    # depends_on:
+    #   - mongo
     expose:
-      - 3000
-    ports:
-      - '3000:3000'
-    volumes:
-      - /www:/build
-  ####################
-  # Setup MongoDB
-  ####################
-  # mongo:
-  #   container_name: mongo
-  #   image: mongo
-  #   volumes:
-  #     - ./data:/data/db
-  #   ports:
-  #     - '27017:27017'
-  nginx:
-    image: nginx:latest
-    ports:
-      - '8080:8080'
-    volumes:
-      - app-static:/srv/www/static
-      - ./default.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - client
-volumes:
-  app-static:
-
-ersion: '3.2'
-
-services:
-  ####################
-  # Setup server
-  ####################
-  # server:
-  #   build: ./server
-  #   links:
-  #     - mongo
-  #   expose:
-  #     - 5000
-  #   restart: on-failure
-  #   command: npm run start
-  ####################
-  # Setup client
-  ####################
-  client:
-    command: npm run build
+      - 5000
     environment:
-      - NODE_ENV=production
-  ####################
-  # Setup MongoDB
-  ####################
-  # mongo:
-  #   container_name: mongo
-  #   image: mongo
-  #   volumes:
-  #     - ./data:/data/db
-  #   ports:
-  #     - '27017:27017'
+      NODE_ENV: production
+      COOKIE_KEY: sdkhjasduhsdkjhksdfhj8wj
+      GOOGLE_CLIENT_ID: 881384575505-297qhcjfinr9fqdsf7vcbps3lsa6cltl.apps.googleusercontent.com
+      MONGO_URI: mongodb+srv://royhersh:ye5OqTgzxDmuiZl2@cluster0-4ql12.mongodb.net/dayssince?retryWrites=true&w=majority
+      SECRET: top-sectet
+
+    restart: on-failure
+    command: npm run start
+  nginx:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.prod
+    ports:
+      - '80:80'
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
