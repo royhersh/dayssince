@@ -14,10 +14,22 @@ const daysSinceRoutes = require('./routes/daysSinceRoutes');
 
 mongoose.set('useNewUrlParser', true);
 if (process.env.NODE_ENV !== 'test') {
-  mongoose.connect(keys.mongoURI);
+  console.log('connecto to:', keys.mongoURI);
+  mongoose.connect(keys.mongoURI).catch(err => {
+    console.log('ERROR - ', err);
+    process.exit(1);
+  });
 }
 
 const app = express();
+
+if (process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    if (req.header('x-forwarded-proto') !== 'https')
+      res.redirect(`https://${req.header('host')}${req.url}`);
+    else next();
+  });
+}
 
 app.use(bodyParser.json());
 app.use(passport.initialize());
@@ -26,7 +38,7 @@ authRoutes(app);
 app.use('/dayssince/api', daysSinceRoutes);
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
+  app.use(express.static('../client/build'));
 
   const path = require('path');
   app.get('*', (req, res) => {

@@ -1,37 +1,34 @@
 {
-  "name": "server",
+  "name": "dayssince",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "engines": {
     "node": "10.13.0",
     "npm": "6.4.1"
   },
   "scripts": {
-    "start": "node index.js",
-    "server": "nodemon index.js",
+    "init": "npm i && npm i --prefix client && npm i --prefix server",
     "client": "npm run start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "test": "NODE_ENV=test nodemon --exec 'mocha'",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "server": "nodemon server/index.js",
+    "dev:local": "concurrently \"npm run server\" \"npm run client\"",
+    "dev:docker": "docker-compose -f docker-compose.dev.yaml up --build",
+    "prod:docker": "docker-compose -f docker-compose.yaml -f docker-compose.prod.yaml up --build",
+    "buildClient": "npm run build --prefix client",
+    "start": "npm run start --prefix server",
+    "build": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client && npm install --prefix server",
+    "deploy:heroku": "git push heroku master"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/royhersh/dayssince.git"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "cookie-session": "^1.3.3",
-    "express": "^4.17.1",
-    "jwt-simple": "^0.5.6",
-    "mongoose": "^5.6.0",
-    "passport": "^0.4.0",
-    "passport-google-oauth20": "^2.0.0",
-    "passport-jwt": "^4.0.0"
+  "bugs": {
+    "url": "https://github.com/royhersh/dayssince/issues"
   },
+  "homepage": "https://github.com/royhersh/dayssince#readme",
   "devDependencies": {
-    "chai": "^4.2.0",
-    "concurrently": "^4.1.0",
-    "mocha": "^6.1.4",
-    "nodemon": "^1.19.1",
-    "supertest": "^4.0.2"
+    "concurrently": "^4.1.0"
   }
 }

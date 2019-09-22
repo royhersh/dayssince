@@ -143,8 +143,10 @@ export class DaysSinceItem extends Component {
             role="button"
             tabIndex="0"
           />
+          {/*
           <i className="icon far fa-calendar-alt" role="button" tabIndex="0" />
           <i className="icon far fa-calendar-check" role="button" tabIndex="0" />
+          */}
           <i
             onClick={this.handleDeleteItem}
             onKeyPress={this.handleDeleteItem}

@@ -18,7 +18,10 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "2.1.3",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-import": "^2.17.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -39,6 +42,7 @@
   "devDependencies": {
     "@testing-library/react": "^8.0.9",
     "enzyme": "^3.10.0",
+    "eslint-config-airbnb": "^17.1.0",
     "jest-extended": "^0.11.2",
     "jest-localstorage-mock": "^2.4.0",
     "jsdom": "^15.1.1"

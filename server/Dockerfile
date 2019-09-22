@@ -5,9 +5,9 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 
-# ADD . /usr/src/app
+COPY . /usr/src/app
 
-# CMD [ "npm", "start" ]
+CMD [ "npm", "start" ]
 # FROM node:10.15.3
 
 # LABEL maintainet="Roy Hershkovitz"

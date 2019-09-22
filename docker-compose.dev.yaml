@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  ####################
+  # Setup server
+  ####################
+  server:
+    build: ./server
+    depends_on:
+      - mongo
+    environment:
+      - PLATFORM=docker-compose
+    expose:
+      - 5000
+    restart: on-failure
+    command: npm run start
+  ####################
+  # Setup client
+  ####################
+  client:
+    build: ./client
+    command: npm run start
+    environment:
+      - PLATFORM=docker-compose
+    expose:
+      - 3000
+    ports:
+      - '3000:3000'
+    # working_dir: /usr/src/app
+    volumes:
+      - ./client:/usr/src/app
+
+  ####################
+  # Setup MongoDB
+  ####################
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - data-db:/data/db
+    ports:
+      - '27017:27017'
+
+volumes:
+  data-db:
