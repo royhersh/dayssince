@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "init": "npm i && npm i --prefix client && npm i --prefix server",
     "client": "npm run start --prefix client",
     "server": "nodemon server/index.js",
     "dev:local": "concurrently \"npm run server\" \"npm run client\"",
