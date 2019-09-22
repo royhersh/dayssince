@@ -29,6 +29,7 @@ services:
     # working_dir: /usr/src/app
     volumes:
       - ./client:/usr/src/app
+      - /usr/src/app/node_modules
 
   ####################
   # Setup MongoDB
