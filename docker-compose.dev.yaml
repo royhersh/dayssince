@@ -13,7 +13,10 @@ services:
     expose:
       - 5000
     restart: on-failure
-    command: npm run start
+    volumes:
+      - ./server:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
   ####################
   # Setup client
   ####################
