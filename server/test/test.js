@@ -18,7 +18,7 @@ before(done => {
   mongoose.connection.once('open', done).on('error', error => {
     if (error.name === 'MongoNetworkError')
       console.log(
-        "WARNING: Can't connect to mongoDB server, Have you started the server?"
+        `WARNING: Can't connect to mongoDB server. This test requires a mongoDB server.\nIf you have docker you can run mongoDB with the command: docker run -d -p 27017:27017 mongo`
       );
     else {
       console.log(error);
