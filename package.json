@@ -13,6 +13,7 @@
     "test:server": "npm run test --prefix server",
     "test:client": "npm run test --prefix client",
     "test:client:coverage": "npm test --prefix client -- --coverage && live-server client/coverage/lcov-report/",
+    "cypress:open": "cypress open",
     "dev:local": "concurrently \"npm run server\" \"npm run client\"",
     "dev:docker": "docker-compose -f docker-compose.dev.yaml up --build",
     "prod:docker": "docker-compose -f docker-compose.yaml -f docker-compose.prod.yaml up --build",
@@ -33,6 +34,7 @@
   "homepage": "https://github.com/royhersh/dayssince#readme",
   "devDependencies": {
     "concurrently": "^4.1.0",
+    "cypress": "^4.0.0",
     "live-server": "^1.2.1"
   }
 }
