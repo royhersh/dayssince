@@ -75,6 +75,7 @@ export class App extends Component {
       return (
         <div
           className={addButtonClass}
+          data-cy="add-button"
           role="button"
           tabIndex={0}
           onKeyPress={createNewItem}

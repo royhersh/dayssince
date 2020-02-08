@@ -4,20 +4,20 @@ describe('Dayssince', () => {
     })
 
     it('Add new todo by clicking the overlay', () => {
-        cy.get('.add-button')
+        cy.get('[data-cy=add-button]')
             .click();
         cy.focused().type('new todo');
-        cy.get('#overlay')
+        cy.get('[data-cy=overlay]')
             .should('exist')
             .click()
             .should('not.exist');
     })
 
     it('Add new todo by pressing enter the overlay', () => {
-        cy.get('.add-button')
+        cy.get('[data-cy=add-button]')
             .click();
         cy.focused().type('new todo{enter}');
-        cy.get('#overlay')
+        cy.get('[data-cy=overlay]')
             .should('not.exist');
     })
 

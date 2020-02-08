@@ -130,6 +130,7 @@ export class DaysSinceItem extends Component {
               <Modal>
                 <div
                   id="overlay"
+                  data-cy="overlay"
                   onClick={this.handleClickOverlay}
                   role="button"
                   onKeyPress={this.handleClickOverlay}
