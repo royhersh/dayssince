@@ -57,6 +57,10 @@ export class DaysSinceItem extends Component {
     });
   };
 
+  handleEnterKey = (e) => {
+    if (e.key === 'Enter') this.handleClickOverlay();
+  }
+
   setEditMode = () => {
     const { renderId, setEditMode, editMode } = this.props;
     !editMode && setEditMode(renderId);
@@ -74,6 +78,7 @@ export class DaysSinceItem extends Component {
     const { _id, renderId, deleteItem } = this.props;
     deleteItem(renderId, _id);
   };
+
 
   render() {
     const { editMode, deleteAnimation, tabIndex } = this.props;
@@ -119,6 +124,7 @@ export class DaysSinceItem extends Component {
                 className="item-info__title"
                 ref={this.titleRef}
                 value={title}
+                onKeyDown={this.handleEnterKey}
                 onChange={this.handleTitleChange}
               />
               <Modal>
@@ -132,8 +138,8 @@ export class DaysSinceItem extends Component {
               </Modal>
             </>
           ) : (
-            <div className="item-info__title">{title}</div>
-          )}
+              <div className="item-info__title">{title}</div>
+            )}
         </div>
         <div className="item-edit">
           <i
